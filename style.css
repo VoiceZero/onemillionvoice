@@ -1,38 +1,113 @@
+:root {
+  --primary-color: #7b2cbf;
+  --background-color: #f7f7f9;
+  --text-color: #222;
+  --header-bg: #000;
+  --button-bg: #7b2cbf;
+  --button-hover: #9d4edd;
+}
+
 body {
-  font-family: Arial, sans-serif;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin: 0;
   padding: 0;
-  background: #f5f5f5;
-  color: #333;
+  background: var(--background-color);
+  color: var(--text-color);
 }
+
 header {
-  background: black;
+  background: var(--header-bg);
   color: white;
-  padding: 60px 20px;
+  padding: 80px 20px;
   text-align: center;
 }
+
+header h1 {
+  font-size: 3rem;
+  margin-bottom: 10px;
+}
+
+header p {
+  font-size: 1.2rem;
+  opacity: 0.9;
+}
+
 .cta-button {
   margin-top: 20px;
-  padding: 10px 20px;
-  background: white;
-  color: black;
+  padding: 14px 30px;
+  background: var(--button-bg);
+  color: white;
   text-decoration: none;
   font-weight: bold;
-  border-radius: 5px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
 }
+
+.cta-button:hover {
+  background: var(--button-hover);
+}
+
 main {
-  padding: 40px 20px;
+  padding: 50px 20px;
 }
+
+h2 {
+  text-align: center;
+  color: var(--primary-color);
+  font-size: 2rem;
+  margin-bottom: 30px;
+}
+
 form {
-  max-width: 500px;
+  max-width: 600px;
   margin: auto;
   background: white;
-  padding: 20px;
-  border-radius: 10px;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
-form input, form textarea {
+
+form label {
+  font-weight: 600;
+  display: block;
+  margin: 15px 0 5px;
+}
+
+form input[type="text"],
+form textarea,
+form input[type="file"] {
   width: 100%;
   margin-bottom: 15px;
-  padding: 10px;
+  padding: 12px;
   border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+form textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+form input[type="radio"] {
+  margin-right: 6px;
+  margin-left: 10px;
+}
+
+form button[type="submit"] {
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  font-size: 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+form button[type="submit"]:hover {
+  background: var(--button-hover);
 }
