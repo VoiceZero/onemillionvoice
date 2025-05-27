@@ -23,11 +23,10 @@ body {
 header {
   background: var(--header-bg);
   color: white;
-  padding: 80px 20px;
+  padding: 120px 20px 80px 20px; /* aggiunto spazio sopra */
   text-align: center;
-  max-width: 100%;
-  overflow-x: hidden;
 }
+
 
 header h1 {
   font-size: 3rem;
@@ -137,6 +136,10 @@ form button[type="submit"]:hover {
 }
 
 .dev-banner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
   background-color: #ffcc00;
   color: #222;
   text-align: center;
@@ -144,8 +147,7 @@ form button[type="submit"]:hover {
   font-weight: bold;
   font-size: 1rem;
   border-bottom: 2px solid #000;
-  position: sticky;
-  top: 0;
   z-index: 1000;
 }
+
 
