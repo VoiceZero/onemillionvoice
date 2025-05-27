@@ -1,9 +1,9 @@
 document.getElementById("form").addEventListener("submit", function (e) {
   e.preventDefault();
 
-  const name = document.querySelector('input[name="name"]').value.trim();
-  const message = document.querySelector('textarea[name="message"]').value.trim();
-  const type = document.querySelector('input[name="messageType"]:checked')?.value || "Not specified";
+  const name = document.getElementById("name").value.trim();
+  const message = document.getElementById("story").value.trim();
+  const type = document.querySelector('input[name="format"]:checked')?.value || "Not specified";
 
   if (!message) {
     alert("Please enter a message.");
@@ -23,7 +23,7 @@ document.getElementById("form").addEventListener("submit", function (e) {
   })
   .then(response => response.text())
   .then(data => {
-    document.getElementById("form").reset();
+    document.querySelector("form").reset();
     document.getElementById("confirmation-message").style.display = "block";
   })
   .catch(error => {
