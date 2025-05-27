@@ -4,7 +4,7 @@ document.querySelector('form').addEventListener('submit', function (e) {
   const name = document.getElementById('name').value.trim();
   const story = document.getElementById('story')?.value.trim();
   const videoFile = document.getElementById('video')?.files[0];
-  const format = document.querySelector('input[name="format"]:checked').value;
+  const messageType = document.querySelector('input[name="messageType"]:checked').value;
 
   if (format === 'text' && !story) {
     alert("Please enter your story.");
@@ -17,10 +17,11 @@ document.querySelector('form').addEventListener('submit', function (e) {
   }
 
   const formData = {
-    name: name || "Anonymous",
-    type: format,
-    message: format === 'text' ? story : '(video uploaded)'
-  };
+  name: name || "Anonymous",
+  messageType: messageType,
+  message: messageType === 'text' ? story : '(video uploaded)'
+};
+
 
   fetch("https://script.google.com/macros/s/AKfycbxIp3h4jTIWzn8NYQgrbVHXVU1Fdqf7QRH1SrYdu-EeJQN9TxQRzkvn3rERhLywVchOmQ/exec", {
     method: "POST",
@@ -44,7 +45,7 @@ document.querySelector('form').addEventListener('submit', function (e) {
 document.querySelectorAll('input[name="format"]').forEach((radio) => {
   radio.addEventListener('change', () => {
     const format = document.querySelector('input[name="format"]:checked').value;
-    document.getElementById('text-entry').style.display = format === 'text' ? 'block' : 'none';
-    document.getElementById('video-entry').style.display = format === 'video' ? 'block' : 'none';
+    document.getElementById('text-entry').style.display = messageType === 'text' ? 'block' : 'none';
+document.getElementById('video-entry').style.display = messageType === 'video' ? 'block' : 'none';
   });
 });
