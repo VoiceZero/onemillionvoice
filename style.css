@@ -10,7 +10,7 @@
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin: 0;
-  padding: 0;
+  padding: 0 10px;
   background: var(--background-color);
   color: var(--text-color);
 }
@@ -64,7 +64,7 @@ h2 {
 }
 
 form {
-  width: 100%
+  width: 100%;
   max-width: 600px;
   margin: 0 auto;
   background: white;
@@ -115,8 +115,5 @@ form button[type="submit"] {
 form button[type="submit"]:hover {
   background: var(--button-hover);
 }
-body {
-  padding-left: 10px
-  padding-right: 10px;
-  }
+
 
