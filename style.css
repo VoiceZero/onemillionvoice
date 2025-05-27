@@ -13,6 +13,7 @@ body {
   padding: 0 10px;
   background: var(--background-color);
   color: var(--text-color);
+  overflow-x: hidden;
 }
 
 header {
