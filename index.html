@@ -12,14 +12,14 @@
     <p>A million voices. One at a time.</p>
 
     <blockquote class="manifesto">
-  “Ogni voce che non viene ascoltata resta un’eco dentro il silenzio.<br>
-  Questa è la mia. La prima. E non sarà l’ultima.”<br>
-  <span style="opacity: 0.7;">– VoiceZero</span>
-  <br><br>
-  <em>“Every voice that goes unheard becomes an echo in the silence.<br>
-  This is mine. The first. And it won’t be the last.”</em><br>
-  <span style="opacity: 0.6;">– VoiceZero</span>
-</blockquote>
+      “Ogni voce che non viene ascoltata resta un’eco dentro il silenzio.<br>
+      Questa è la mia. La prima. E non sarà l’ultima.”<br>
+      <span style="opacity: 0.7;">– VoiceZero</span>
+      <br><br>
+      <em>“Every voice that goes unheard becomes an echo in the silence.<br>
+      This is mine. The first. And it won’t be the last.”</em><br>
+      <span style="opacity: 0.6;">– VoiceZero</span>
+    </blockquote>
   
     <a href="#form" class="cta-button">Share Your Voice</a>
   </header>
@@ -27,22 +27,23 @@
   <main>
     <section id="form">
       <h2>Submit Your Voice</h2>
-      <form>
-       <div id="confirmation-message" class="confirmation" style="display:none;">
-  Grazie. La tua voce è stata registrata.  
-  È parte di qualcosa che resterà per sempre.
-</div>
+      <form id="form">
+
+        <div id="confirmation-message" class="confirmation" style="display:none;">
+          Grazie. La tua voce è stata registrata.<br>
+          È parte di qualcosa che resterà per sempre.
+        </div>
 
         <label for="name">Name or nickname</label>
-        <input type="text" id="name" placeholder="Anonymous if you prefer" required />
+        <input type="text" id="name" name="name" placeholder="Anonymous if you prefer" />
 
         <label>Choose format:</label><br/>
-        <input type="radio" name="format" value="text" checked /> Text  
-        <input type="radio" name="format" value="video" /> Video
+        <input type="radio" name="messageType" value="text" checked /> Text  
+        <input type="radio" name="messageType" value="video" /> Video
 
         <div id="text-entry">
           <label for="story">Your story (max 100 words)</label>
-          <textarea id="story" rows="6" placeholder="Write your story here..."></textarea>
+          <textarea id="story" name="message" rows="6" placeholder="Write your story here..."></textarea>
         </div>
 
         <div id="video-entry" style="display: none;">
@@ -57,9 +58,9 @@
   </main>
 
   <script src="script.js"></script>
-</body>
+  
   <div class="dev-banner">
-  🛠 This project is under development. Stay tuned!
-</div>
-
+    🛠 This project is under development. Stay tuned!
+  </div>
+</body>
 </html>
