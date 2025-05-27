@@ -52,7 +52,9 @@ header p {
 
 main {
   padding: 50px 20px;
- }
+  background: rgba(0, 255, 0, 0.1); /* solo per test */
+}
+
 
 h2 {
   text-align: center;
