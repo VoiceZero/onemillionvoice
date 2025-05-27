@@ -150,4 +150,16 @@ form button[type="submit"]:hover {
   z-index: 1000;
 }
 
+.manifesto {
+  font-style: italic;
+  color: #444;
+  font-size: 1.2rem;
+  margin-top: 30px;
+  padding: 0 20px;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
 
