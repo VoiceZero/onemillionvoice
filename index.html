@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OneMillionVoice</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>OneMillionVoice</h1>
+    <p>A million voices. One at a time.</p>
+    <a href="#form" class="cta-button">Share Your Voice</a>
+  </header>
+
+  <main>
+    <section id="form">
+      <h2>Submit Your Voice</h2>
+      <form>
+        <label for="name">Name or nickname</label>
+        <input type="text" id="name" placeholder="Anonymous if you prefer" required />
+
+        <label>Choose format:</label><br/>
+        <input type="radio" name="format" value="text" checked /> Text  
+        <input type="radio" name="format" value="video" /> Video
+
+        <div id="text-entry">
+          <label for="story">Your story (max 100 words)</label>
+          <textarea id="story" rows="6" placeholder="Write your story here..."></textarea>
+        </div>
+
+        <div id="video-entry" style="display: none;">
+          <label for="video">Upload your video (max 60 sec)</label>
+          <input type="file" id="video" accept="video/mp4" />
+        </div>
+
+        <label><input type="checkbox" /> Stay anonymous</label><br/>
+        <button type="submit">Submit</button>
+      </form>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
