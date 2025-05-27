@@ -31,4 +31,3 @@ document.getElementById("form").addEventListener("submit", function (e) {
     console.error("Error:", error);
   });
 });
-
