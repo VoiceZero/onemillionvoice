@@ -32,9 +32,11 @@ header {
 header h1 {
   font-size: 3rem;
   margin-bottom: 10px;
-  word-breack: break-word;
-  overflow-wrap: breack-word;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  text-align: center;
 }
+
 
 header p {
   font-size: 1.2rem;
@@ -128,4 +130,9 @@ form button[type="submit"]:hover {
   background: var(--button-hover);
 }
 
+@media (max-width: 480px) {
+  header h1 {
+    font-size: 2rem;
+  }
+}
 
