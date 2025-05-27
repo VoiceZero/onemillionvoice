@@ -23,9 +23,10 @@ document.getElementById("form").addEventListener("submit", function (e) {
   })
   .then(response => response.text())
   .then(data => {
-    alert("Thanks for sharing your voice!");
-    document.getElementById("form").reset();
-  })
+  document.getElementById("form").reset();
+  document.getElementById("confirmation-message").style.display = "block";
+})
+
   .catch(error => {
     alert("Something went wrong. Please try again.");
     console.error("Error:", error);
