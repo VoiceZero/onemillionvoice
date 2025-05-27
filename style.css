@@ -1,3 +1,5 @@
+/* === style.css aggiornato con miglioramenti non invasivi === */
+
 :root {
   --primary-color: #7b2cbf;
   --background-color: #f7f7f9;
@@ -23,10 +25,9 @@ body {
 header {
   background: var(--header-bg);
   color: white;
-  padding: 120px 20px 80px 20px; /* aggiunto spazio sopra */
+  padding: 120px 20px 80px 20px; /* spazio sopra aumentato */
   text-align: center;
 }
-
 
 header h1 {
   font-size: 3rem;
@@ -35,7 +36,6 @@ header h1 {
   overflow-wrap: break-word;
   text-align: center;
 }
-
 
 header p {
   font-size: 1.2rem;
@@ -62,8 +62,7 @@ header p {
 
 main {
   padding: 50px 20px;
- }
-
+}
 
 h2 {
   text-align: center;
@@ -79,7 +78,7 @@ form {
   background: white;
   padding: 30px 40px;
   border-radius: 12px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
   box-sizing: border-box;
 }
 
@@ -102,7 +101,6 @@ form input[type="file"] {
   border-radius: 6px;
   font-size: 1rem;
 }
-
 
 form textarea {
   resize: vertical;
@@ -132,6 +130,13 @@ form button[type="submit"]:hover {
 @media (max-width: 480px) {
   header h1 {
     font-size: 2rem;
+  }
+  .cta-button {
+    width: 100%;
+    padding: 12px 0;
+  }
+  form {
+    padding: 20px;
   }
 }
 
@@ -176,4 +181,3 @@ form button[type="submit"]:hover {
   margin-left: auto;
   margin-right: auto;
 }
-
