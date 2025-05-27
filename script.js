@@ -19,7 +19,7 @@ document.querySelector('form').addEventListener('submit', function (e) {
   const payload = {
     name: name,
     message: story,
-    "Message Type": format
+    messageType: format
   };
 
   fetch("https://script.google.com/macros/s/AKfycbxIp3h4jTIWzn8NYQgrbVHXVU1Fdqf7QRH1SrYdu-EeJQN9TxQRzkvn3rERhLywVchOmQ/exec", {
@@ -40,7 +40,7 @@ document.querySelector('form').addEventListener('submit', function (e) {
     });
 });
 
-// Cambio dinamico tra text e video
+// Gestione cambio tra testo e video
 document.querySelectorAll('input[name="messageType"]').forEach((radio) => {
   radio.addEventListener('change', () => {
     const format = document.querySelector('input[name="messageType"]:checked')?.value;
