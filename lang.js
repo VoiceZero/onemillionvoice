@@ -12,7 +12,7 @@ async function translate(lang) {
 
     document.querySelector('#form h2').textContent = data.formTitle;
     document.querySelector('label[for="name"]').textContent = data.nameLabel;
-    document.querySelector('input[name="name"]').placeholder = data.namePlaceholder;
+    document.querySelector('#name').placeholder = data.namePlaceholder;
     document.querySelector('label[for="format"]').textContent = data.formatLabel;
     document.querySelector('label[for="text"]').textContent = data.textLabel;
     document.querySelector('label[for="video"]').textContent = data.videoLabel;
@@ -29,4 +29,3 @@ async function translate(lang) {
     console.error("Errore nel caricamento della lingua:", error);
   }
 }
-
