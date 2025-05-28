@@ -1,5 +1,10 @@
 document.querySelector('form').addEventListener('submit', function (e) {
   e.preventDefault();
+// ⏳ Mostra spinner e disabilita il pulsante
+document.getElementById('loading-spinner').style.display = 'block';
+const submitButton = document.querySelector('button[type="submit"]');
+submitButton.disabled = true;
+submitButton.textContent = "Sending...";
 
   const name = document.getElementById('name').value.trim() || "Anonymous";
   const story = document.getElementById('story')?.value.trim();
