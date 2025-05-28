@@ -24,14 +24,12 @@ async function translate(lang = 'it') {
 
     document.querySelector('label[for="videoUpload"]').textContent = t.videoUploadLabel;
 
-    document.querySelector('label[for="anonymous"]').textContent = t.anonymousLabel;
+    document.querySelector('#anonymous-label').textContent = t.anonymousLabel;
     document.getElementById("anonymous-note").textContent = t.anonymousNote;
 
     document.querySelector('button[type="submit"]').textContent = t.submitButton;
 
-    // Salva l’intero oggetto in una variabile globale per riutilizzarlo in script.js
     window.translations = t;
-
   } catch (err) {
     console.error("Errore nel caricamento lingua:", err);
   }
