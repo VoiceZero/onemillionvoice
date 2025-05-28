@@ -22,7 +22,7 @@ document.querySelector('form').addEventListener('submit', function (e) {
     messageType: format
   };
 
-  fetch("https://script.google.com/macros/s/AKfycbxIp3h4jTIWzn8NYQgrbVHXVU1Fdqf7QRH1SrYdu-EeJQN9TxQRzkvn3rERhLywVchOmQ/exec", {
+  fetch("https://script.google.com/macros/s/AKfycbxcL6Bh41I-D0fn4ilmGP9qedVzm1kI9Bl939AHOqDyqNf3T3vqMD6Tgt7QjZGcSLvr/exec", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
