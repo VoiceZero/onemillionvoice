@@ -9,18 +9,33 @@ document.querySelector('form').addEventListener('submit', function (e) {
 
   const nameInput = document.getElementById('name').value.trim();
   const anonymousChecked = document.getElementById('anonymous-checkbox').checked;
-  const name = anonymousChecked ? "Anonymous" : (nameInput || "Anonymous");
 
+  // ✅ Controllo nome obbligatorio se NON anonimo
+  if (!nameInput && !anonymousChecked) {
+    alert("Per favore inserisci un nome o seleziona 'Stay anonymous'.");
+    document.getElementById('loading-spinner').style.display = 'none';
+    submitButton.disabled = false;
+    submitButton.textContent = "Submit";
+    return;
+  }
+
+  const name = anonymousChecked ? "Anonymous" : nameInput;
   const story = document.getElementById('story')?.value.trim();
   const format = document.querySelector('input[name="messageType"]:checked')?.value;
 
   if (format === 'text' && !story) {
     alert("Please enter your story.");
+    document.getElementById('loading-spinner').style.display = 'none';
+    submitButton.disabled = false;
+    submitButton.textContent = "Submit";
     return;
   }
 
   if (format === 'video') {
     alert("📽️ Video format is not yet supported. Only text messages are stored for now.");
+    document.getElementById('loading-spinner').style.display = 'none';
+    submitButton.disabled = false;
+    submitButton.textContent = "Submit";
     return;
   }
 
