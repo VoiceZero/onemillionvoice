@@ -20,9 +20,10 @@
   "confirmation": "Thank you. Your voice has been recorded. It is part of something that will last forever.",
   "errorMissingName": "Please enter your name or select 'Stay anonymous'.",
   "errorMissingStory": "Please write your story.",
-  "errorVideoNotSupported": "📽️ Video format is not supported yet. Only text messages are saved for now.",
+  "errorVideoNotSupported": "📽️ Video format is not yet supported. Only text messages are saved for now.",
   "errorGeneric": "Something went wrong. Please try again.",
-  "sending": "Sending..."
- "confirmationFull": "Thank you. Your voice has been recorded.<br>It is part of something that will last forever.",
- "confirmationAnon": "<strong>Your voice can remain anonymous, but it will never be ignored.</strong><br>It is part of something that will last forever."
+  "sending": "Sending...",
+  "confirmationFull": "Thank you. Your voice has been recorded.<br>It is part of something that will last forever.",
+  "confirmationAnon": "<strong>Your voice can remain anonymous, but it will never be ignored.</strong><br>It is part of something that will last forever.",
+  "devBanner": "This project is under development. Stay tuned!"
 }
