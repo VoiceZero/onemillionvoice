@@ -1,36 +1,32 @@
-async function translate(lang = 'it') {
+window.translations = {};
+
+async function translate(lang) {
   try {
-    const res = await fetch(`lang/${lang}.json`);
-    const t = await res.json();
+    const response = await fetch(`lang/${lang}.json`);
+    const data = await response.json();
+    window.translations = data;
 
-    document.querySelector("h1").textContent = t.headerTitle;
-    document.querySelector("header p").textContent = t.headerSubtitle;
-    document.querySelector(".manifesto").innerHTML = `
-      “${t.manifestoLine1}<br>${t.manifestoLine2}”<br>
-      <span style="opacity: 0.7;">${t.manifestoAuthor}</span>
-    `;
-    document.querySelector(".cta-button").textContent = t.ctaButton;
-    document.querySelector("h2").textContent = t.formTitle;
+    // Popola i testi dinamicamente
+    document.querySelector('header p').textContent = data.subtitle;
+    document.querySelector('.manifesto').innerHTML = data.manifesto;
+    document.querySelector('.cta-button').textContent = data.cta;
 
-    document.querySelector('label[for="name"]').textContent = t.nameLabel;
-    document.querySelector('#name').placeholder = t.namePlaceholder;
+    document.querySelector('#form h2').textContent = data.formTitle;
+    document.querySelector('label[for="name"]').textContent = data.nameLabel;
+    document.querySelector('input[name="name"]').placeholder = data.namePlaceholder;
+    document.querySelector('label[for="format"]').textContent = data.formatLabel;
+    document.querySelector('label[for="text"]').textContent = data.textOption;
+    document.querySelector('label[for="video"]').textContent = data.videoOption;
+    document.querySelector('label[for="story"]').textContent = data.storyLabel;
+    document.querySelector('#story').placeholder = data.storyPlaceholder;
+    document.querySelector('label[for="videoUpload"]').textContent = data.videoUploadLabel;
 
-    document.querySelector('label[for="format"]').textContent = t.formatLabel;
-    document.querySelector('label[for="text"]').textContent = t.textLabel;
-    document.querySelector('label[for="video"]').textContent = t.videoLabel;
+    document.getElementById('anonymous-label').textContent = data.anonymousLabel;
+    document.getElementById('anonymous-note').textContent = data.anonymousNote;
 
-    document.querySelector('label[for="story"]').textContent = t.storyLabel;
-    document.querySelector('#story').placeholder = t.storyPlaceholder;
-
-    document.querySelector('label[for="videoUpload"]').textContent = t.videoUploadLabel;
-
-    document.querySelector('#anonymous-label').textContent = t.anonymousLabel;
-    document.getElementById("anonymous-note").textContent = t.anonymousNote;
-
-    document.querySelector('button[type="submit"]').textContent = t.submitButton;
-
-    window.translations = t;
-  } catch (err) {
-    console.error("Errore nel caricamento lingua:", err);
+    document.querySelector('button[type="submit"]').textContent = data.submitButton;
+    document.querySelector('.dev-banner').textContent = data.devBanner;
+  } catch (error) {
+    console.error("Errore nel caricamento della lingua:", error);
   }
 }
