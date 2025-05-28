@@ -12,7 +12,7 @@ document.querySelector('form').addEventListener('submit', function (e) {
   const nameInput = document.getElementById('name').value.trim();
   const anonymousChecked = document.getElementById('anonymous').checked;
 
-  // Controllo nome
+  // ✅ VALIDAZIONE - nome richiesto se non anonimo
   if (!nameInput && !anonymousChecked) {
     alert(window.translations.errorMissingName);
     loading.style.display = 'none';
@@ -74,7 +74,7 @@ document.querySelector('form').addEventListener('submit', function (e) {
     });
 });
 
-// Cambio dinamico text/video
+// ✅ Cambio dinamico text/video
 document.querySelectorAll('input[name="messageType"]').forEach((radio) => {
   radio.addEventListener('change', () => {
     const format = document.querySelector('input[name="messageType"]:checked')?.value;
@@ -82,3 +82,4 @@ document.querySelectorAll('input[name="messageType"]').forEach((radio) => {
     document.getElementById('video-entry').style.display = format === 'video' ? 'block' : 'none';
   });
 });
+
