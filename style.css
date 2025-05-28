@@ -114,9 +114,15 @@ form textarea {
   margin-bottom: 15px;
 }
 
-form input[type="radio"] {
+.radio-group input[type="radio"] {
+  margin-right: 6px;
+}
+
+.radio-group label {
   margin: 0;
-  vertical-align: middle;
+  display: flex;
+  align-items: center;
+  font-weight: normal;
 }
 
 form button[type="submit"] {
