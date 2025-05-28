@@ -29,18 +29,18 @@ document.querySelector('form').addEventListener('submit', function (e) {
     },
     body: JSON.stringify(payload)
   })
-    .then(response => response.text())
-    .then(data => {
-      document.querySelector('form').reset();
-      document.getElementById("confirmation-message").style.display = "block";
-    })
-    .catch(error => {
-      alert("Something went wrong. Please try again.");
-      console.error("Error:", error);
-    });
+  .then(response => response.text())
+  .then(data => {
+    document.querySelector('form').reset();
+    document.getElementById("confirmation-message").style.display = "block";
+  })
+  .catch(error => {
+    alert("Something went wrong. Please try again.");
+    console.error("Error:", error);
+  });
 });
 
-// Gestione cambio tra testo e video
+// Cambio dinamico text/video
 document.querySelectorAll('input[name="messageType"]').forEach((radio) => {
   radio.addEventListener('change', () => {
     const format = document.querySelector('input[name="messageType"]:checked')?.value;
