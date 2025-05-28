@@ -8,16 +8,15 @@
 </head>
 <body>
   <header>
+    <div class="language-switcher">
+      <img src="https://flagcdn.com/w40/it.png" alt="Italiano" onclick="translate('it')" />
+      <img src="https://flagcdn.com/w40/gb.png" alt="English" onclick="translate('en')" />
+    </div>
     <h1>OneMillionVoices</h1>
     <p></p>
     <blockquote class="manifesto"></blockquote>
     <a href="#form" class="cta-button"></a>
   </header>
-
-  <div id="language-switcher" style="text-align: right; padding: 10px 20px;">
-  <button onclick="setLang('it')">🇮🇹 Italiano</button>
-  <button onclick="setLang('en')">🇬🇧 English</button>
-</div>
 
   <main>
     <section id="form">
@@ -29,10 +28,11 @@
         <input type="text" id="name" name="name" placeholder="" />
 
         <label for="format"></label><br/>
-        <div style="display: flex; align-items: center; gap: 20px;">
-          <label><input type="radio" name="messageType" value="text" checked /> <span id="label-text"></span></label>
-          <label><input type="radio" name="messageType" value="video" /> <span id="label-video"></span></label>
-        </div>
+        <input type="radio" name="messageType" value="text" checked />
+        <label for="text"></label>
+
+        <input type="radio" name="messageType" value="video" />
+        <label for="video"></label>
 
         <div id="text-entry">
           <label for="story"></label>
@@ -66,3 +66,4 @@
   <script>translate('it');</script>
 </body>
 </html>
+
