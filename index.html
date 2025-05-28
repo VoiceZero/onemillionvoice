@@ -24,11 +24,10 @@
         <input type="text" id="name" name="name" placeholder="" />
 
         <label for="format"></label><br/>
-        <input type="radio" name="messageType" value="text" checked />
-        <label for="text"></label>
-
-        <input type="radio" name="messageType" value="video" />
-        <label for="video"></label>
+        <div style="display: flex; align-items: center; gap: 20px;">
+          <label><input type="radio" name="messageType" value="text" checked /> <span id="label-text"></span></label>
+          <label><input type="radio" name="messageType" value="video" /> <span id="label-video"></span></label>
+        </div>
 
         <div id="text-entry">
           <label for="story"></label>
@@ -56,11 +55,9 @@
 
   <div class="dev-banner">🛠 Questo progetto è in sviluppo. Resta connesso!</div>
 
-  <!-- JS: ordine importante -->
+  <!-- JS -->
   <script src="lang.js"></script>
   <script src="script.js"></script>
-  <script>
-    translate('it'); // imposta lingua all'avvio
-  </script>
+  <script>translate('it');</script>
 </body>
 </html>
