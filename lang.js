@@ -1,6 +1,6 @@
 window.translations = {};
 
-async function translate(lang) {
+window.translate = async function(lang) {
   try {
     const response = await fetch(`lang/${lang}.json`);
     const data = await response.json();
@@ -9,7 +9,6 @@ async function translate(lang) {
     document.querySelector('header p').textContent = data.headerSubtitle;
     document.querySelector('.manifesto').innerHTML = `${data.manifestoLine1}<br>${data.manifestoLine2}<br><span>${data.manifestoAuthor}</span>`;
     document.querySelector('.cta-button').textContent = data.ctaButton;
-
     document.querySelector('#form h2').textContent = data.formTitle;
     document.querySelector('label[for="name"]').textContent = data.nameLabel;
     document.querySelector('input[name="name"]').placeholder = data.namePlaceholder;
@@ -19,14 +18,11 @@ async function translate(lang) {
     document.querySelector('label[for="story"]').textContent = data.storyLabel;
     document.querySelector('#story').placeholder = data.storyPlaceholder;
     document.querySelector('label[for="videoUpload"]').textContent = data.videoUploadLabel;
-
     document.getElementById('anonymous-label').textContent = data.anonymousLabel;
     document.getElementById('anonymous-note').textContent = data.anonymousNote;
-
     document.querySelector('button[type="submit"]').textContent = data.submitButton;
     document.querySelector('.dev-banner').textContent = data.devBanner;
-  } catch (error) {
-    console.error("Errore nel caricamento della lingua:", error);
+  } catch (err) {
+    console.error("Errore nella traduzione:", err);
   }
-}
-window.translate = translate;
+};
