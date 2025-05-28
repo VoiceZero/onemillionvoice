@@ -7,10 +7,16 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <!-- SWITCHER LINGUE -->
-  <div class="language-switcher">
-    <img src="https://flagcdn.com/w40/it.png" alt="IT" id="lang-it" />
-    <img src="https://flagcdn.com/w40/gb.png" alt="EN" id="lang-en" />
+  <div class="dev-banner">🛠 Questo progetto è in sviluppo. Resta connesso!</div>
+
+  <!-- SCELTA LINGUA -->
+  <div id="language-selector">
+    <button onclick="window.translate('it')">
+      <img src="https://flagcdn.com/w40/it.png" alt="IT"> Italiano
+    </button>
+    <button onclick="window.translate('en')">
+      <img src="https://flagcdn.com/w40/gb.png" alt="EN"> English
+    </button>
   </div>
 
   <header>
@@ -45,7 +51,7 @@
 
         <div id="video-entry" style="display: none;">
           <label for="videoUpload"></label>
-          <input type="file" id="videoUpload" accept="video/mp4" />
+          <input type="file" id="video" accept="video/mp4" />
         </div>
 
         <label for="anonymous" class="checkbox-label">
@@ -62,19 +68,10 @@
     </section>
   </main>
 
-  <div class="dev-banner">🛠 Questo progetto è in sviluppo. Resta connesso!</div>
-
-  <!-- JS: ordine importante -->
   <script src="lang.js"></script>
   <script src="script.js"></script>
   <script>
-    window.addEventListener("DOMContentLoaded", () => {
-      translate('it');
-
-      // Event listeners linguaggio
-      document.getElementById('lang-it')?.addEventListener('click', () => translate('it'));
-      document.getElementById('lang-en')?.addEventListener('click', () => translate('en'));
-    });
+    window.translate('it');
   </script>
 </body>
 </html>
