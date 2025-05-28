@@ -1,1 +1,27 @@
+{
+  "headerTitle": "OneMillionVoices",
+  "headerSubtitle": "One million voices. One at a time.",
+  "manifestoLine1": "Every voice that goes unheard becomes an echo in the silence.",
+  "manifestoLine2": "This is mine. The first. And not the last.",
+  "manifestoAuthor": "– VoiceZero",
+  "ctaButton": "Share your voice",
+  "formTitle": "Send your voice",
+  "nameLabel": "Name or nickname",
+  "namePlaceholder": "Anonymous if you prefer",
+  "formatLabel": "Choose the format:",
+  "textLabel": "Text",
+  "videoLabel": "Video",
+  "storyLabel": "Your story (max 100 words)",
+  "storyPlaceholder": "Write your story here...",
+  "videoUploadLabel": "Upload your video (max 60 sec)",
+  "anonymousLabel": "Stay anonymous",
+  "anonymousNote": "Your voice can be anonymous, but it will never be ignored.",
+  "submitButton": "Submit",
+  "confirmation": "Thank you. Your voice has been recorded. It is part of something that will last forever.",
+  "errorMissingName": "Please enter your name or select 'Stay anonymous'.",
+  "errorMissingStory": "Please write your story.",
+  "errorVideoNotSupported": "📽️ Video format is not supported yet. Only text messages are saved for now.",
+  "errorGeneric": "Something went wrong. Please try again.",
+  "sending": "Sending..."
+}
 
