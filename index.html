@@ -15,12 +15,12 @@
   </header>
 
   <!-- SCELTA LINGUA -->
-  <div id="language-selector">
+  <div id="language-selector" class="language-switcher">
     <button onclick="translate('it')">
-      <img src="https://flagcdn.com/w40/it.png" alt="IT" width="20"> Italiano
+      <img src="https://flagcdn.com/w40/it.png" alt="IT" width="30" height="20"> Italiano
     </button>
     <button onclick="translate('en')">
-      <img src="https://flagcdn.com/w40/gb.png" alt="EN" width="20"> English
+      <img src="https://flagcdn.com/w40/gb.png" alt="EN" width="30" height="20"> English
     </button>
   </div>
 
@@ -33,12 +33,14 @@
         <label for="name"></label>
         <input type="text" id="name" name="name" placeholder="" />
 
-        <label for="format"></label><br/>
-        <input type="radio" name="messageType" value="text" checked />
-        <label for="text"></label>
+        <label for="format"></label>
+        <div class="radio-group">
+          <input type="radio" id="text" name="messageType" value="text" checked />
+          <label for="text"></label>
 
-        <input type="radio" name="messageType" value="video" />
-        <label for="video"></label>
+          <input type="radio" id="video" name="messageType" value="video" />
+          <label for="video"></label>
+        </div>
 
         <div id="text-entry">
           <label for="story"></label>
@@ -50,11 +52,11 @@
           <input type="file" id="video" accept="video/mp4" />
         </div>
 
-        <label for="anonymous" style="display: flex; align-items: center; gap: 8px; margin-top: 10px;">
+        <label for="anonymous" class="checkbox-label">
           <input type="checkbox" id="anonymous" />
           <span id="anonymous-label"></span>
         </label>
-        <p id="anonymous-note" style="margin: 6px 0 15px; font-size: 0.9rem; color: #555;"></p>
+        <p id="anonymous-note"></p>
 
         <button type="submit"></button>
         <div id="loading-spinner" style="display:none; text-align:center; margin-top:20px;">
