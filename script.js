@@ -42,7 +42,7 @@ submitButton.textContent = "Sending...";
   .catch(error => {
     alert("Something went wrong. Please try again.");
     console.error("Error:", error);
-  });
+  })
 .finally(() => {
   // ✅ Nascondi spinner e riattiva pulsante
   document.getElementById('loading-spinner').style.display = 'none';
