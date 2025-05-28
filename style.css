@@ -1,4 +1,4 @@
-/* === style.css aggiornato con miglioramenti non invasivi === */
+/* === style.css aggiornato e definitivo === */
 
 :root {
   --primary-color: #7b2cbf;
@@ -231,29 +231,10 @@ form button[type="submit"]:hover {
   100% { transform: rotate(360deg); }
 }
 
-.language-switcher {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  display: flex;
-  gap: 12px;
-}
-
-.language-switcher img {
-  width: 30px;
-  height: auto;
-  cursor: pointer;
-  border-radius: 4px;
-  border: 2px solid transparent;
-  transition: border 0.3s;
-}
-
-.language-switcher img:hover {
-  border: 2px solid var(--primary-color);
-}
+/* ✅ CORRETTO: selettore lingua visibile e stabile */
 #language-selector {
-  position: absolute;
-  top: 20px;
+  position: fixed;
+  top: 60px; /* sotto al banner giallo */
   right: 20px;
   display: flex;
   gap: 10px;
