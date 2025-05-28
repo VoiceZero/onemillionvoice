@@ -43,6 +43,14 @@ submitButton.textContent = "Sending...";
     alert("Something went wrong. Please try again.");
     console.error("Error:", error);
   });
+.finally(() => {
+  // ✅ Nascondi spinner e riattiva pulsante
+  document.getElementById('loading-spinner').style.display = 'none';
+  const submitButton = document.querySelector('button[type="submit"]');
+  submitButton.disabled = false;
+  submitButton.textContent = "Submit";
+});
+
 });
 
 // Cambio dinamico text/video
