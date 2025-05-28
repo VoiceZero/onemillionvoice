@@ -7,7 +7,6 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <!-- Selettore lingua -->
   <select id="language-switcher" onchange="translate(this.value)" style="position: fixed; top: 1rem; right: 1rem; z-index: 1000;">
     <option value="it">🇮🇹 Italiano</option>
     <option value="en">🇬🇧 English</option>
@@ -22,7 +21,7 @@
       Questa è la mia. La prima. E non sarà l’ultima.”<br>
       <span style="opacity: 0.7;">– VoiceZero</span>
     </blockquote>
-  
+
     <a href="#form" class="cta-button">Condividi la tua voce</a>
   </header>
 
@@ -71,7 +70,6 @@
         <!-- BOTTONE -->
         <button type="submit">Invia</button>
 
-        <!-- SPINNER -->
         <div id="loading-spinner" style="display:none; text-align:center; margin-top:20px;">
           <span class="spinner"></span>
         </div>
@@ -79,11 +77,13 @@
     </section>
   </main>
 
-  <!-- SCRIPT -->
-  <script src="script.js"></script>
-  <script src="lang.js"></script>
-  <script>
-    translate('it');
+  <!-- Script -->
+  <script src="script.js" defer></script>
+  <script src="lang.js" defer></script>
+  <script defer>
+    document.addEventListener("DOMContentLoaded", () => {
+      translate('it');
+    });
   </script>
 
   <div class="dev-banner">
