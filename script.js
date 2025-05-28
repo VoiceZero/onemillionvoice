@@ -61,8 +61,8 @@ document.addEventListener("DOMContentLoaded", () => {
         const confirmation = document.getElementById("confirmation-message");
         confirmation.style.display = "block";
         confirmation.innerHTML = anonymousChecked
-          ? window.translations.confirmationAnon
-          : window.translations.confirmationFull;
+          ? `<strong>${window.translations.anonymousNote}</strong><br>${window.translations.confirmation}`
+          : window.translations.confirmation;
       })
       .catch(error => {
         alert(window.translations.errorGeneric);
@@ -84,5 +84,4 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 });
-
 
