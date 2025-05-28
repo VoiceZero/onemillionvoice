@@ -80,3 +80,7 @@ document.querySelectorAll('input[name="messageType"]').forEach((radio) => {
     document.getElementById('video-entry').style.display = format === 'video' ? 'block' : 'none';
   });
 });
+<script src="lang.js"></script>
+<script>
+  translate('it'); // Applicazione iniziale della lingua italiana
+</script>
