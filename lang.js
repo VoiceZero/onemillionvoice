@@ -29,3 +29,4 @@ async function translate(lang) {
     console.error("Errore nel caricamento della lingua:", error);
   }
 }
+window.translate = translate;
