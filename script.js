@@ -1,14 +1,17 @@
 document.querySelector('form').addEventListener('submit', function (e) {
   e.preventDefault();
-// ⏳ Mostra spinner e disabilita il pulsante
-document.getElementById('loading-spinner').style.display = 'block';
-const submitButton = document.querySelector('button[type="submit"]');
-submitButton.disabled = true;
-submitButton.textContent = "Sending...";
 
-  const name = document.getElementById('name').value.trim() || "Anonymous";
+  // ⏳ Spinner + blocco bottone
+  document.getElementById('loading-spinner').style.display = 'block';
+  const submitButton = document.querySelector('button[type="submit"]');
+  submitButton.disabled = true;
+  submitButton.textContent = "Sending...";
+
+  const nameInput = document.getElementById('name').value.trim();
+  const anonymousChecked = document.getElementById('anonymous-checkbox').checked;
+  const name = anonymousChecked ? "Anonymous" : (nameInput || "Anonymous");
+
   const story = document.getElementById('story')?.value.trim();
-  const videoFile = document.getElementById('video')?.files[0];
   const format = document.querySelector('input[name="messageType"]:checked')?.value;
 
   if (format === 'text' && !story) {
@@ -37,20 +40,21 @@ submitButton.textContent = "Sending...";
   .then(response => response.text())
   .then(data => {
     document.querySelector('form').reset();
-    document.getElementById("confirmation-message").style.display = "block";
+    const confirmation = document.getElementById("confirmation-message");
+    confirmation.style.display = "block";
+    confirmation.innerHTML = anonymousChecked
+      ? `Grazie. <strong>La tua voce può restare anonima, ma non sarà mai ignorata.</strong><br>È parte di qualcosa che resterà per sempre.`
+      : `Grazie. La tua voce è stata registrata.<br>È parte di qualcosa che resterà per sempre.`;
   })
   .catch(error => {
     alert("Something went wrong. Please try again.");
     console.error("Error:", error);
   })
-.finally(() => {
-  // ✅ Nascondi spinner e riattiva pulsante
-  document.getElementById('loading-spinner').style.display = 'none';
-  const submitButton = document.querySelector('button[type="submit"]');
-  submitButton.disabled = false;
-  submitButton.textContent = "Submit";
-});
-
+  .finally(() => {
+    document.getElementById('loading-spinner').style.display = 'none';
+    submitButton.disabled = false;
+    submitButton.textContent = "Submit";
+  });
 });
 
 // Cambio dinamico text/video
