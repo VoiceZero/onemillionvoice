@@ -23,5 +23,6 @@
   "errorVideoNotSupported": "📽️ Video format is not supported yet. Only text messages are saved for now.",
   "errorGeneric": "Something went wrong. Please try again.",
   "sending": "Sending..."
+ "confirmationFull": "Thank you. Your voice has been recorded.<br>It is part of something that will last forever.",
+ "confirmationAnon": "<strong>Your voice can remain anonymous, but it will never be ignored.</strong><br>It is part of something that will last forever."
 }
-
