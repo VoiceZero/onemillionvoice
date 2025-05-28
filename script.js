@@ -5,17 +5,17 @@ document.querySelector('form').addEventListener('submit', function (e) {
   document.getElementById('loading-spinner').style.display = 'block';
   const submitButton = document.querySelector('button[type="submit"]');
   submitButton.disabled = true;
-  submitButton.textContent = "Sending...";
+  submitButton.textContent = window.translations.sending;
 
   const nameInput = document.getElementById('name').value.trim();
-  const anonymousChecked = document.getElementById('anonymous-checkbox').checked;
+  const anonymousChecked = document.getElementById('anonymous').checked;
 
   // ✅ Controllo nome obbligatorio se NON anonimo
   if (!nameInput && !anonymousChecked) {
-    alert("Per favore inserisci un nome o seleziona 'Stay anonymous'.");
+    alert(window.translations.errorMissingName);
     document.getElementById('loading-spinner').style.display = 'none';
     submitButton.disabled = false;
-    submitButton.textContent = "Submit";
+    submitButton.textContent = window.translations.submitButton;
     return;
   }
 
@@ -24,18 +24,18 @@ document.querySelector('form').addEventListener('submit', function (e) {
   const format = document.querySelector('input[name="messageType"]:checked')?.value;
 
   if (format === 'text' && !story) {
-    alert("Please enter your story.");
+    alert(window.translations.errorMissingStory);
     document.getElementById('loading-spinner').style.display = 'none';
     submitButton.disabled = false;
-    submitButton.textContent = "Submit";
+    submitButton.textContent = window.translations.submitButton;
     return;
   }
 
   if (format === 'video') {
-    alert("📽️ Video format is not yet supported. Only text messages are stored for now.");
+    alert(window.translations.errorVideoNotSupported);
     document.getElementById('loading-spinner').style.display = 'none';
     submitButton.disabled = false;
-    submitButton.textContent = "Submit";
+    submitButton.textContent = window.translations.submitButton;
     return;
   }
 
@@ -58,17 +58,17 @@ document.querySelector('form').addEventListener('submit', function (e) {
     const confirmation = document.getElementById("confirmation-message");
     confirmation.style.display = "block";
     confirmation.innerHTML = anonymousChecked
-      ? `Grazie. <strong>La tua voce può restare anonima, ma non sarà mai ignorata.</strong><br>È parte di qualcosa che resterà per sempre.`
-      : `Grazie. La tua voce è stata registrata.<br>È parte di qualcosa che resterà per sempre.`;
+      ? `<strong>${window.translations.anonymousNote}</strong><br>${window.translations.confirmation}`
+      : window.translations.confirmation;
   })
   .catch(error => {
-    alert("Something went wrong. Please try again.");
+    alert(window.translations.errorGeneric);
     console.error("Error:", error);
   })
   .finally(() => {
     document.getElementById('loading-spinner').style.display = 'none';
     submitButton.disabled = false;
-    submitButton.textContent = "Submit";
+    submitButton.textContent = window.translations.submitButton;
   });
 });
 
@@ -80,7 +80,3 @@ document.querySelectorAll('input[name="messageType"]').forEach((radio) => {
     document.getElementById('video-entry').style.display = format === 'video' ? 'block' : 'none';
   });
 });
-<script src="lang.js"></script>
-<script>
-  translate('it'); // Applicazione iniziale della lingua italiana
-</script>
