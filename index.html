@@ -7,22 +7,18 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <!-- SWITCHER LINGUE -->
+  <div class="language-switcher">
+    <img src="https://flagcdn.com/w40/it.png" alt="IT" id="lang-it" />
+    <img src="https://flagcdn.com/w40/gb.png" alt="EN" id="lang-en" />
+  </div>
+
   <header>
     <h1>OneMillionVoices</h1>
     <p></p>
     <blockquote class="manifesto"></blockquote>
     <a href="#form" class="cta-button"></a>
   </header>
-
-  <!-- SCELTA LINGUA -->
-  <div id="language-selector" class="language-switcher">
-    <button onclick="translate('it')">
-      <img src="https://flagcdn.com/w40/it.png" alt="IT" width="30" height="20"> Italiano
-    </button>
-    <button onclick="translate('en')">
-      <img src="https://flagcdn.com/w40/gb.png" alt="EN" width="30" height="20"> English
-    </button>
-  </div>
 
   <main>
     <section id="form">
@@ -49,7 +45,7 @@
 
         <div id="video-entry" style="display: none;">
           <label for="videoUpload"></label>
-          <input type="file" id="video" accept="video/mp4" />
+          <input type="file" id="videoUpload" accept="video/mp4" />
         </div>
 
         <label for="anonymous" class="checkbox-label">
@@ -72,7 +68,13 @@
   <script src="lang.js"></script>
   <script src="script.js"></script>
   <script>
-    translate('it'); // imposta lingua all'avvio
+    window.addEventListener("DOMContentLoaded", () => {
+      translate('it');
+
+      // Event listeners linguaggio
+      document.getElementById('lang-it')?.addEventListener('click', () => translate('it'));
+      document.getElementById('lang-en')?.addEventListener('click', () => translate('en'));
+    });
   </script>
 </body>
 </html>
