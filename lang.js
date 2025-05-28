@@ -2,6 +2,7 @@ window.translations = {};
 
 async function translate(lang) {
   try {
+    localStorage.setItem('language', lang); // salva preferenza
     const response = await fetch(`lang/${lang}.json`);
     const data = await response.json();
     window.translations = data;
@@ -30,9 +31,20 @@ async function translate(lang) {
 
     document.querySelector('button[type="submit"]').textContent = data.submitButton;
 
-    // BANNER DEV
+    // DEV BANNER
     document.querySelector('.dev-banner').textContent = "🛠 " + (data.devBanner || "Questo progetto è in sviluppo. Resta connesso!");
   } catch (error) {
     console.error("Errore nel caricamento della lingua:", error);
   }
 }
+
+// Funzione richiamata dai bottoni
+function setLang(lang) {
+  translate(lang);
+}
+
+// Applica lingua al primo avvio (o ricorda da localStorage)
+document.addEventListener("DOMContentLoaded", () => {
+  const savedLang = localStorage.getItem("language") || "it";
+  translate(savedLang);
+});
