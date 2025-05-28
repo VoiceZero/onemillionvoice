@@ -57,4 +57,37 @@
           <input type="file" id="videoUpload" accept="video/mp4" />
         </div>
 
-        <label for="anonymous" style="display: flex; align-items: center; gap: 8px; margin-top: 10px;">
+        <!-- FLAG ANONIMO -->
+        <div style="margin-top: 15px;">
+          <label for="anonymous" style="display: flex; align-items: center; gap: 8px;">
+            <input type="checkbox" id="anonymous" />
+            <span id="anonymous-label">Rimani anonimo</span>
+          </label>
+          <p id="anonymous-note" style="margin: 6px 0 15px; font-size: 0.9rem; color: #555;">
+            La tua voce può restare anonima, ma non sarà mai ignorata.
+          </p>
+        </div>
+
+        <!-- BOTTONE -->
+        <button type="submit">Invia</button>
+
+        <!-- SPINNER -->
+        <div id="loading-spinner" style="display:none; text-align:center; margin-top:20px;">
+          <span class="spinner"></span>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <!-- SCRIPT -->
+  <script src="script.js"></script>
+  <script src="lang.js"></script>
+  <script>
+    translate('it');
+  </script>
+
+  <div class="dev-banner">
+    🛠 Questo progetto è in fase di sviluppo. Resta connesso!
+  </div>
+</body>
+</html>
