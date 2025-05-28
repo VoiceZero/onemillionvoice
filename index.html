@@ -7,17 +7,22 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="lang-switcher">
-    <span class="lang-btn" data-lang="it">🇮🇹 Italiano</span> |
-    <span class="lang-btn" data-lang="en">🇬🇧 English</span>
-  </div>
-
   <header>
     <h1>OneMillionVoices</h1>
     <p></p>
     <blockquote class="manifesto"></blockquote>
     <a href="#form" class="cta-button"></a>
   </header>
+
+  <!-- SCELTA LINGUA -->
+  <div id="language-selector">
+    <button onclick="translate('it')">
+      <img src="https://flagcdn.com/w40/it.png" alt="IT" width="20"> Italiano
+    </button>
+    <button onclick="translate('en')">
+      <img src="https://flagcdn.com/w40/gb.png" alt="EN" width="20"> English
+    </button>
+  </div>
 
   <main>
     <section id="form">
@@ -28,9 +33,10 @@
         <label for="name"></label>
         <input type="text" id="name" name="name" placeholder="" />
 
-        <label for="format"></label>
+        <label for="format"></label><br/>
         <input type="radio" name="messageType" value="text" checked />
         <label for="text"></label>
+
         <input type="radio" name="messageType" value="video" />
         <label for="video"></label>
 
@@ -58,18 +64,13 @@
     </section>
   </main>
 
-  <div class="dev-banner"></div>
+  <div class="dev-banner">🛠 Questo progetto è in sviluppo. Resta connesso!</div>
 
+  <!-- JS: ordine importante -->
   <script src="lang.js"></script>
   <script src="script.js"></script>
   <script>
-    translate('it'); // Lingua predefinita
-    document.querySelectorAll('.lang-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const lang = btn.getAttribute('data-lang');
-        translate(lang);
-      });
-    });
+    translate('it'); // imposta lingua all'avvio
   </script>
 </body>
 </html>
