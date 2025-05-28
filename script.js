@@ -9,16 +9,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
     loading.style.display = 'block';
     submitButton.disabled = true;
-    submitButton.textContent = window.translations?.sending || 'Sending...';
+    submitButton.textContent = window.translations.sending;
 
     const nameInput = document.getElementById('name')?.value.trim();
     const anonymousChecked = document.getElementById('anonymous')?.checked;
 
     if (!nameInput && !anonymousChecked) {
-      alert(window.translations?.errorMissingName || 'Please enter your name or check anonymous.');
+      alert(window.translations.errorMissingName);
       loading.style.display = 'none';
       submitButton.disabled = false;
-      submitButton.textContent = window.translations?.submitButton || 'Submit';
+      submitButton.textContent = window.translations.submitButton;
       return;
     }
 
@@ -27,18 +27,18 @@ document.addEventListener("DOMContentLoaded", () => {
     const format = document.querySelector('input[name="messageType"]:checked')?.value;
 
     if (format === 'text' && !story) {
-      alert(window.translations?.errorMissingStory || 'Please write your story.');
+      alert(window.translations.errorMissingStory);
       loading.style.display = 'none';
       submitButton.disabled = false;
-      submitButton.textContent = window.translations?.submitButton || 'Submit';
+      submitButton.textContent = window.translations.submitButton;
       return;
     }
 
     if (format === 'video') {
-      alert(window.translations?.errorVideoNotSupported || 'Video format not supported yet.');
+      alert(window.translations.errorVideoNotSupported);
       loading.style.display = 'none';
       submitButton.disabled = false;
-      submitButton.textContent = window.translations?.submitButton || 'Submit';
+      submitButton.textContent = window.translations.submitButton;
       return;
     }
 
@@ -61,17 +61,17 @@ document.addEventListener("DOMContentLoaded", () => {
         const confirmation = document.getElementById("confirmation-message");
         confirmation.style.display = "block";
         confirmation.innerHTML = anonymousChecked
-          ? `<strong>${window.translations?.anonymousNote || ''}</strong><br>${window.translations?.confirmation || 'Message sent.'}`
-          : window.translations?.confirmation || 'Message sent.';
+          ? window.translations.confirmationAnon
+          : window.translations.confirmationFull;
       })
       .catch(error => {
-        alert(window.translations?.errorGeneric || 'Something went wrong. Please try again.');
+        alert(window.translations.errorGeneric);
         console.error("Error:", error);
       })
       .finally(() => {
         loading.style.display = 'none';
         submitButton.disabled = false;
-        submitButton.textContent = window.translations?.submitButton || 'Submit';
+        submitButton.textContent = window.translations.submitButton;
       });
   });
 
