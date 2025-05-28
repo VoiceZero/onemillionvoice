@@ -4,7 +4,8 @@ export default async function handler(req, res) {
   }
 
   try {
-    const response = await fetch(process.env.GOOGLE_SCRIPT_URL, {
+    const response = await fetch(process.env.GOOGLE_APPS_SCRIPT_URL
+, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
