@@ -11,13 +11,13 @@ document.addEventListener("DOMContentLoaded", () => {
     loading.style.display = "block";
     confirmation.style.display = "none";
     submitButton.disabled = true;
-    submitButton.textContent = window.translations.sending;
+    submitButton.textContent = window.translations?.sending || "Invio in corso...";
 
     const nameInput = document.getElementById("name")?.value.trim();
     const anonymousChecked = document.getElementById("anonymous")?.checked;
 
     if (!nameInput && !anonymousChecked) {
-      alert(window.translations.errorMissingName);
+      alert(window.translations?.errorMissingName || "Per favore inserisci il tuo nome o spunta 'Anonimo'.");
       resetButton();
       return;
     }
@@ -27,13 +27,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const format = document.querySelector('input[name="messageType"]:checked')?.value;
 
     if (format === "text" && !story) {
-      alert(window.translations.errorMissingStory);
+      alert(window.translations?.errorMissingStory || "Per favore scrivi il tuo messaggio.");
       resetButton();
       return;
     }
 
     if (format === "video") {
-      alert(window.translations.errorVideoNotSupported);
+      alert(window.translations?.errorVideoNotSupported || "Il formato video non è ancora supportato.");
       resetButton();
       return;
     }
@@ -52,15 +52,15 @@ document.addEventListener("DOMContentLoaded", () => {
       body: JSON.stringify(payload),
     })
       .then((response) => response.text())
-      .then((data) => {
+      .then(() => {
         form.reset();
         confirmation.style.display = "block";
         confirmation.innerHTML = anonymousChecked
-          ? window.translations.confirmationAnon
-          : window.translations.confirmationFull;
+          ? window.translations?.confirmationAnon || "Messaggio inviato in forma anonima."
+          : window.translations?.confirmationFull || "Grazie per aver condiviso la tua voce!";
       })
       .catch((error) => {
-        alert(window.translations.errorGeneric);
+        alert(window.translations?.errorGeneric || "Si è verificato un errore. Riprova.");
         console.error("Error:", error);
       })
       .finally(() => {
@@ -70,7 +70,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function resetButton() {
       loading.style.display = "none";
       submitButton.disabled = false;
-      submitButton.textContent = window.translations.submitButton;
+      submitButton.textContent = window.translations?.submitButton || "Invia";
     }
   });
 
