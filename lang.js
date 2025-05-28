@@ -7,7 +7,7 @@ async function translate(lang) {
     window.translations = data;
 
     document.querySelector('header p').textContent = data.headerSubtitle;
-    document.querySelector('.manifesto').innerHTML = `${data.manifestoLine1}<br>${data.manifestoLine2}<br><em>${data.manifestoAuthor}</em>`;
+    document.querySelector('.manifesto').innerHTML = `${data.manifestoLine1}<br>${data.manifestoLine2}<br><span>${data.manifestoAuthor}</span>`;
     document.querySelector('.cta-button').textContent = data.ctaButton;
 
     document.querySelector('#form h2').textContent = data.formTitle;
