@@ -22,8 +22,9 @@
   "errorMissingStory": "Per favore scrivi la tua storia.",
   "errorVideoNotSupported": "📽️ Il formato video non è ancora supportato. Solo i testi vengono salvati al momento.",
   "errorGeneric": "Qualcosa è andato storto. Riprova.",
-  "sending": "Invio in corso..."
- "confirmationFull": "Grazie. La tua voce è stata registrata.<br>È parte di qualcosa che resterà per sempre.",
- "confirmationAnon": "<strong>La tua voce può restare anonima, ma non sarà mai ignorata.</strong><br>È parte di qualcosa che resterà per sempre."
+  "sending": "Invio in corso...",
+  "confirmationFull": "Grazie. La tua voce è stata registrata.<br>È parte di qualcosa che resterà per sempre.",
+  "confirmationAnon": "<strong>La tua voce può restare anonima, ma non sarà mai ignorata.</strong><br>È parte di qualcosa che resterà per sempre.",
+  "devBanner": "Questo progetto è in sviluppo. Resta connesso!"
 }
 
