@@ -39,11 +39,13 @@
         <label for="name">Nome o nickname</label>
         <input type="text" id="name" name="name" placeholder="Anonimo se preferisci" />
 
-        <label for="format">Scegli il formato:</label><br/>
-        <input type="radio" id="text" name="messageType" value="text" checked />
-        <label for="text">Testo</label>  
-        <input type="radio" id="video" name="messageType" value="video" />
-        <label for="video">Video</label>
+        <label for="format">Scegli il formato:</label>
+        <div style="display: flex; gap: 1rem; align-items: center; margin: 10px 0;">
+          <input type="radio" id="text" name="messageType" value="text" checked />
+          <label for="text">Testo</label>
+          <input type="radio" id="video" name="messageType" value="video" />
+          <label for="video">Video</label>
+        </div>
 
         <div id="text-entry">
           <label for="story">La tua storia (max 100 parole)</label>
@@ -56,32 +58,3 @@
         </div>
 
         <label for="anonymous" style="display: flex; align-items: center; gap: 8px; margin-top: 10px;">
-          <input type="checkbox" id="anonymous" />
-          <span id="anonymous-label">Rimani anonimo</span>
-        </label>
-        <p id="anonymous-note" style="margin: 6px 0 15px; font-size: 0.9rem; color: #555;">
-          La tua voce può restare anonima, ma non sarà mai ignorata.
-        </p>
-
-        <button type="submit">Invia</button>
-
-        <div id="loading-spinner" style="display:none; text-align:center; margin-top:20px;">
-          <span class="spinner"></span>
-        </div>
-      </form>
-    </section>
-  </main>
-
-  <!-- Script principali -->
-  <script src="script.js"></script>
-  <script src="lang.js"></script>
-  <script>
-    // Imposta lingua iniziale
-    translate('it');
-  </script>
-
-  <div class="dev-banner">
-    🛠 This project is under development. Stay tuned!
-  </div>
-</body>
-</html>
