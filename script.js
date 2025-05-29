@@ -65,10 +65,13 @@ document.addEventListener("DOMContentLoaded", () => {
       const payload = {
         name: name,
         message: story,
-        "Message Type": format, // ✅ coerente con Google Sheet
+        "Message Type": format,
         timestamp: timestamp,
         timezone: timezone
       };
+
+      // 👇 LOG DI DEBUG VISIBILE NEL BROWSER
+      console.log("Dati inviati al server:", payload);
 
       fetch("/api/submit", {
         method: "POST",
@@ -114,10 +117,9 @@ document.addEventListener("DOMContentLoaded", () => {
           let timestamp = "Data non valida";
 
           if (msg.timestamp) {
-            let dateObj = new Date(msg.timestamp); // ISO format support
+            let dateObj = new Date(msg.timestamp);
 
             if (isNaN(dateObj)) {
-              // parser custom per formato "DD/MM/YYYY, HH:mm"
               const regex = /^(\d{2})\/(\d{2})\/(\d{4}),\s*(\d{2}):(\d{2})$/;
               const match = msg.timestamp.match(regex);
               if (match) {
