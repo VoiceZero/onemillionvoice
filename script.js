@@ -59,10 +59,15 @@ document.addEventListener("DOMContentLoaded", () => {
         return resetButton();
       }
 
+      const timestamp = new Date().toISOString();
+      const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
       const payload = {
         name: name,
         message: story,
         messageType: format,
+        timestamp: timestamp,
+        timezone: timezone
       };
 
       fetch("/api/submit", {
@@ -106,38 +111,25 @@ document.addEventListener("DOMContentLoaded", () => {
           const div = document.createElement("div");
           div.className = "card";
 
-          // FIX TIMESTAMP ROBUSTO
+          // TIMESTAMP ROBUSTO + TIMEZONE
           let timestamp = "";
           if (msg.timestamp) {
-            const parts = msg.timestamp.split(/[\s,]+/); // split su spazio e virgola
-            const [part1, part2] = parts;
-            let day, month, year, time;
+            const dateObj = new Date(msg.timestamp);
+            if (!isNaN(dateObj)) {
+              timestamp =
+                dateObj.toLocaleDateString("it-IT", {
+                  day: "2-digit",
+                  month: "2-digit",
+                  year: "numeric"
+                }) +
+                " " +
+                dateObj.toLocaleTimeString("it-IT", {
+                  hour: "2-digit",
+                  minute: "2-digit"
+                });
 
-            if (part1?.includes("/")) {
-              const split = part1.split("/");
-              if (split.length === 3) {
-                // formato DD/MM/YYYY o MM/DD/YYYY
-                if (split[0].length === 4) {
-                  // Y/M/D => inusuale
-                  year = split[0]; month = split[1]; day = split[2];
-                } else if (split[2].length === 4) {
-                  // D/M/Y
-                  day = split[0]; month = split[1]; year = split[2];
-                }
-              }
-            }
-
-            time = part2 || "";
-
-            if (day && month && year && time) {
-              const isoString = `${year.padStart(4, "20")}-${month.padStart(2, "0")}-${day.padStart(2, "0")}T${time}`;
-              const dateObj = new Date(isoString);
-              if (!isNaN(dateObj)) {
-                timestamp = dateObj.toLocaleDateString("it-IT", { day: "2-digit", month: "2-digit", year: "numeric" }) +
-                            " " +
-                            dateObj.toLocaleTimeString("it-IT", { hour: "2-digit", minute: "2-digit" });
-              } else {
-                timestamp = "Data non valida";
+              if (msg.timezone) {
+                timestamp += ` (${msg.timezone})`;
               }
             } else {
               timestamp = "Data non valida";
