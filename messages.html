@@ -7,15 +7,22 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="lang-switch">
-    <img src="img/it.png" class="flag" data-lang="it" />
-    <img src="img/en.png" class="flag" data-lang="en" />
+  <!-- SCELTA LINGUA -->
+  <div id="language-selector">
+    <button onclick="window.translate('it')">
+      <img src="https://flagcdn.com/w40/it.png" alt="IT"> Italiano
+    </button>
+    <button onclick="window.translate('en')">
+      <img src="https://flagcdn.com/w40/gb.png" alt="EN"> English
+    </button>
   </div>
+
   <h1 id="messages-title">Messaggi</h1>
   <div id="messages-grid" class="grid"></div>
 
   <script src="lang/it.json" type="application/json" id="lang-it"></script>
   <script src="lang/en.json" type="application/json" id="lang-en"></script>
+  <script src="lang.js"></script>
   <script src="script.js"></script>
   <script>
     async function fetchMessages() {
@@ -36,7 +43,10 @@
       });
     }
 
-    document.addEventListener('DOMContentLoaded', fetchMessages);
+    document.addEventListener('DOMContentLoaded', () => {
+      fetchMessages();
+      window.translate(document.documentElement.lang || 'it');
+    });
   </script>
 </body>
 </html>
