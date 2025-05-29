@@ -17,14 +17,19 @@
     </button>
   </div>
 
+  <!-- TITOLO TRADOTTO -->
   <h1 id="messages-title"></h1>
+
+  <!-- CONTENITORE MESSAGGI -->
   <div id="messages-grid" class="grid"></div>
 
+  <!-- FILE DI TRADUZIONE -->
   <script src="lang/it.json" type="application/json" id="lang-it"></script>
   <script src="lang/en.json" type="application/json" id="lang-en"></script>
   <script src="lang.js"></script>
   <script src="script.js"></script>
 
+  <!-- LOGICA DI CARICAMENTO MESSAGGI -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const lang = document.documentElement.lang || "it";
