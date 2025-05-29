@@ -8,18 +8,28 @@ export default async function handler(req, res) {
     const json = JSON.parse(text.substring(47).slice(0, -2));
 
     const messages = json.table.rows.map(row => {
-      const rawDate = row.c[0]?.v; // es. Date(2025,4,29,11,44,12)
+      const rawTimestamp = row.c[0]?.v || '';
       let formattedDate = '';
 
-      if (rawDate) {
-        const jsDate = new Date(rawDate);
-        formattedDate = jsDate.toLocaleString('it-IT', {
-          day: '2-digit',
-          month: '2-digit',
-          year: 'numeric',
-          hour: '2-digit',
-          minute: '2-digit'
-        });
+      if (rawTimestamp.startsWith('Date(')) {
+        try {
+          const parts = rawTimestamp
+            .replace('Date(', '')
+            .replace(')', '')
+            .split(',')
+            .map(n => parseInt(n));
+
+          const dateObj = new Date(parts[0], parts[1], parts[2], parts[3], parts[4], parts[5]);
+          formattedDate = dateObj.toLocaleString('it-IT', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+          });
+        } catch (err) {
+          console.error('Errore nel parsing della data:', rawTimestamp);
+        }
       }
 
       return {
