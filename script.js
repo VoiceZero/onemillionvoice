@@ -1,29 +1,32 @@
-function updateTexts(lang) {
-  const translations = JSON.parse(document.getElementById(`lang-${lang}`).textContent);
-  window.translations = translations;
-  for (const key in translations) {
-    const el = document.getElementById(key);
-    if (el) el.textContent = translations[key];
-  }
-}
-
-document.querySelectorAll("#language-selector button").forEach((btn) => {
-  btn.addEventListener("click", () => {
-    const lang = btn.textContent.includes("Italiano") ? "it" : "en";
-    document.documentElement.lang = lang;
-    updateTexts(lang);
-  });
-});
-
 document.addEventListener("DOMContentLoaded", () => {
+  // Inizializza lingua
   const defaultLang = document.documentElement.lang || "it";
-  updateTexts(defaultLang);
+  window.translate(defaultLang);
 
+  // Gestione cambio lingua
+  document.querySelectorAll("#language-selector button").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const lang = btn.textContent.includes("Italiano") ? "it" : "en";
+      document.documentElement.lang = lang;
+      window.translate(lang);
+    });
+  });
+
+  // Logica form (solo se presente)
   const form = document.querySelector("form");
   if (form) {
     const submitButton = document.querySelector('button[type="submit"]');
     const loading = document.getElementById("loading-spinner");
     const confirmation = document.getElementById("confirmation-message");
+
+    // Toggle video/text input
+    document.querySelectorAll('input[name="messageType"]').forEach((radio) => {
+      radio.addEventListener("change", () => {
+        const format = document.querySelector('input[name="messageType"]:checked')?.value;
+        document.getElementById("text-entry").style.display = format === "text" ? "block" : "none";
+        document.getElementById("video-entry").style.display = format === "video" ? "block" : "none";
+      });
+    });
 
     form.addEventListener("submit", function (e) {
       e.preventDefault();
@@ -38,8 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (!nameInput && !anonymousChecked) {
         alert(window.translations?.errorMissingName || "Per favore inserisci il tuo nome o spunta 'Anonimo'.");
-        resetButton();
-        return;
+        return resetButton();
       }
 
       const name = anonymousChecked ? "Anonymous" : nameInput;
@@ -48,14 +50,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (format === "text" && !story) {
         alert(window.translations?.errorMissingStory || "Per favore scrivi il tuo messaggio.");
-        resetButton();
-        return;
+        return resetButton();
       }
 
       if (format === "video") {
         alert(window.translations?.errorVideoNotSupported || "Il formato video non è ancora supportato.");
-        resetButton();
-        return;
+        return resetButton();
       }
 
       const payload = {
@@ -81,7 +81,7 @@ document.addEventListener("DOMContentLoaded", () => {
         })
         .catch((error) => {
           alert(window.translations?.errorGeneric || "Si è verificato un errore. Riprova.");
-          console.error("Error:", error);
+          console.error("Errore:", error);
         })
         .finally(() => {
           resetButton();
@@ -93,18 +93,9 @@ document.addEventListener("DOMContentLoaded", () => {
         submitButton.textContent = window.translations?.submitButton || "Invia";
       }
     });
-
-    // Selezione radio text/video
-    document.querySelectorAll('input[name="messageType"]').forEach((radio) => {
-      radio.addEventListener("change", () => {
-        const format = document.querySelector('input[name="messageType"]:checked')?.value;
-        document.getElementById("text-entry").style.display = format === "text" ? "block" : "none";
-        document.getElementById("video-entry").style.display = format === "video" ? "block" : "none";
-      });
-    });
   }
 
-  // Caricamento messaggi se siamo su messages.html
+  // Caricamento messaggi (solo se presenti)
   const grid = document.getElementById("messages-grid");
   if (grid) {
     fetch("/api/messages")
