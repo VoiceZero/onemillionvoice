@@ -7,11 +7,11 @@ function updateTexts(lang) {
   }
 }
 
-document.querySelectorAll(".flag").forEach((flag) => {
-  flag.addEventListener("click", () => {
-    const selectedLang = flag.dataset.lang;
-    document.documentElement.lang = selectedLang;
-    updateTexts(selectedLang);
+document.querySelectorAll("#language-selector button").forEach((btn) => {
+  btn.addEventListener("click", () => {
+    const lang = btn.textContent.includes("Italiano") ? "it" : "en";
+    document.documentElement.lang = lang;
+    updateTexts(lang);
   });
 });
 
@@ -21,12 +21,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const form = document.querySelector("form");
   if (form) {
+    const submitButton = document.querySelector('button[type="submit"]');
+    const loading = document.getElementById("loading-spinner");
+    const confirmation = document.getElementById("confirmation-message");
+
     form.addEventListener("submit", function (e) {
       e.preventDefault();
-
-      const submitButton = document.querySelector('button[type="submit"]');
-      const loading = document.getElementById("loading-spinner");
-      const confirmation = document.getElementById("confirmation-message");
 
       loading.style.display = "block";
       confirmation.style.display = "none";
@@ -94,7 +94,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
 
-    // Switch tra testo e video
+    // Selezione radio text/video
     document.querySelectorAll('input[name="messageType"]').forEach((radio) => {
       radio.addEventListener("change", () => {
         const format = document.querySelector('input[name="messageType"]:checked')?.value;
@@ -102,5 +102,29 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("video-entry").style.display = format === "video" ? "block" : "none";
       });
     });
+  }
+
+  // Caricamento messaggi se siamo su messages.html
+  const grid = document.getElementById("messages-grid");
+  if (grid) {
+    fetch("/api/messages")
+      .then((res) => res.json())
+      .then((data) => {
+        grid.innerHTML = '';
+        data.forEach(msg => {
+          const div = document.createElement("div");
+          div.className = "card";
+          if (msg.type === "video") {
+            div.innerHTML = `<video controls src="${msg.message}" class="video"></video><p>${msg.name}</p>`;
+          } else {
+            div.innerHTML = `<p>"${msg.message}"</p><p><strong>– ${msg.name}</strong></p>`;
+          }
+          grid.appendChild(div);
+        });
+      })
+      .catch(err => {
+        grid.innerHTML = "<p>Errore nel caricamento dei messaggi.</p>";
+        console.error(err);
+      });
   }
 });
