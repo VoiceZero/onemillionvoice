@@ -124,4 +124,10 @@ document.addEventListener("DOMContentLoaded", () => {
         console.error(err);
       });
   }
+
+  // Traduci titolo messaggi anche al caricamento diretto della pagina
+  const title = document.getElementById("messages-title");
+  if (title && window.translations?.messagesTitle) {
+    title.textContent = window.translations.messagesTitle;
+  }
 });
