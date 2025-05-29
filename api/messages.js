@@ -9,27 +9,32 @@ export default async function handler(req, res) {
 
     const messages = json.table.rows.map(row => {
       const rawDate = row.c[0]?.v;
-      let timestamp = '';
+      let formattedTimestamp = '';
 
-      if (rawDate && rawDate.startsWith('Date')) {
-        try {
-          // Estrai i numeri dalla stringa Date(2025,4,29,11,44,12)
-          const parts = rawDate.match(/\d+/g).map(Number);
-          const jsDate = new Date(parts[0], parts[1], parts[2], parts[3], parts[4], parts[5]);
-          timestamp = jsDate.toLocaleString('it-IT', {
+      if (rawDate && typeof rawDate === 'string' && rawDate.startsWith('Date')) {
+        const parts = rawDate.match(/\d+/g);
+        if (parts && parts.length >= 3) {
+          const jsDate = new Date(
+            parseInt(parts[0]),                  // year
+            parseInt(parts[1]),                  // month (0-based in JS)
+            parseInt(parts[2]),                  // day
+            parseInt(parts[3] || 0),             // hour
+            parseInt(parts[4] || 0),             // minute
+            parseInt(parts[5] || 0)              // second
+          );
+
+          formattedTimestamp = jsDate.toLocaleString('it-IT', {
             day: '2-digit',
             month: '2-digit',
             year: 'numeric',
             hour: '2-digit',
-            minute: '2-digit'
+            minute: '2-digit',
           });
-        } catch (err) {
-          console.error('Errore parsing data:', rawDate, err);
         }
       }
 
       return {
-        timestamp,
+        timestamp: formattedTimestamp,
         name: row.c[1]?.v || '',
         message: row.c[2]?.v || '',
         type: row.c[3]?.v || 'text'
@@ -42,3 +47,4 @@ export default async function handler(req, res) {
     res.status(500).json({ error: 'Errore durante il recupero dei messaggi.' });
   }
 }
+
