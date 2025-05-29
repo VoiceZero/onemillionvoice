@@ -111,11 +111,33 @@ document.addEventListener("DOMContentLoaded", () => {
         data.forEach(msg => {
           const div = document.createElement("div");
           div.className = "card";
+
+          const timestamp = msg.timestamp
+            ? new Date(msg.timestamp).toLocaleString("it-IT", {
+                day: "2-digit",
+                month: "2-digit",
+                year: "numeric",
+                hour: "2-digit",
+                minute: "2-digit",
+              })
+            : "";
+
           if (msg.type === "video") {
-            div.innerHTML = `<video controls src="${msg.message}" class="video"></video><p>${msg.name}</p>`;
+            div.innerHTML = `
+              <video controls src="${msg.message}" class="video"></video>
+              <div class="message-meta">
+                <p class="name">${msg.name}</p>
+                <p class="timestamp">${timestamp}</p>
+              </div>`;
           } else {
-            div.innerHTML = `<p>"${msg.message}"</p><p><strong>– ${msg.name}</strong></p>`;
+            div.innerHTML = `
+              <p class="message-text">"${msg.message}"</p>
+              <div class="message-meta">
+                <p class="name">– ${msg.name}</p>
+                <p class="timestamp">${timestamp}</p>
+              </div>`;
           }
+
           grid.appendChild(div);
         });
       })
