@@ -1,9 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // Inizializza lingua
   const defaultLang = document.documentElement.lang || "it";
   window.translate(defaultLang);
 
-  // Gestione cambio lingua
   document.querySelectorAll("#language-selector button, .flag").forEach((btn) => {
     btn.addEventListener("click", () => {
       const lang = btn.dataset?.lang || (btn.textContent.includes("Italiano") ? "it" : "en");
@@ -17,14 +15,12 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Logica form (solo se presente)
   const form = document.querySelector("form");
   if (form) {
     const submitButton = document.querySelector('button[type="submit"]');
     const loading = document.getElementById("loading-spinner");
     const confirmation = document.getElementById("confirmation-message");
 
-    // Toggle video/text input
     document.querySelectorAll('input[name="messageType"]').forEach((radio) => {
       radio.addEventListener("change", () => {
         const format = document.querySelector('input[name="messageType"]:checked')?.value;
@@ -100,7 +96,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Caricamento messaggi (solo se presenti)
   const grid = document.getElementById("messages-grid");
   if (grid) {
     fetch("/api/messages")
@@ -111,15 +106,43 @@ document.addEventListener("DOMContentLoaded", () => {
           const div = document.createElement("div");
           div.className = "card";
 
-          const timestamp = msg.timestamp
-            ? new Date(msg.timestamp).toLocaleString("it-IT", {
-                day: "2-digit",
-                month: "2-digit",
-                year: "numeric",
-                hour: "2-digit",
-                minute: "2-digit",
-              })
-            : "";
+          // FIX TIMESTAMP ROBUSTO
+          let timestamp = "";
+          if (msg.timestamp) {
+            const parts = msg.timestamp.split(/[\s,]+/); // split su spazio e virgola
+            const [part1, part2] = parts;
+            let day, month, year, time;
+
+            if (part1?.includes("/")) {
+              const split = part1.split("/");
+              if (split.length === 3) {
+                // formato DD/MM/YYYY o MM/DD/YYYY
+                if (split[0].length === 4) {
+                  // Y/M/D => inusuale
+                  year = split[0]; month = split[1]; day = split[2];
+                } else if (split[2].length === 4) {
+                  // D/M/Y
+                  day = split[0]; month = split[1]; year = split[2];
+                }
+              }
+            }
+
+            time = part2 || "";
+
+            if (day && month && year && time) {
+              const isoString = `${year.padStart(4, "20")}-${month.padStart(2, "0")}-${day.padStart(2, "0")}T${time}`;
+              const dateObj = new Date(isoString);
+              if (!isNaN(dateObj)) {
+                timestamp = dateObj.toLocaleDateString("it-IT", { day: "2-digit", month: "2-digit", year: "numeric" }) +
+                            " " +
+                            dateObj.toLocaleTimeString("it-IT", { hour: "2-digit", minute: "2-digit" });
+              } else {
+                timestamp = "Data non valida";
+              }
+            } else {
+              timestamp = "Data non valida";
+            }
+          }
 
           if (msg.type === "video") {
             div.innerHTML = `
