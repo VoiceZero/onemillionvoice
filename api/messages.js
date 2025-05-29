@@ -8,33 +8,10 @@ export default async function handler(req, res) {
     const json = JSON.parse(text.substring(47).slice(0, -2));
 
     const messages = json.table.rows.map(row => {
-      const rawDate = row.c[0]?.v;
-      let formattedTimestamp = '';
-
-      if (rawDate && typeof rawDate === 'string' && rawDate.startsWith('Date')) {
-        const parts = rawDate.match(/\d+/g);
-        if (parts && parts.length >= 3) {
-          const jsDate = new Date(
-            parseInt(parts[0]),                  // year
-            parseInt(parts[1]),                  // month (0-based in JS)
-            parseInt(parts[2]),                  // day
-            parseInt(parts[3] || 0),             // hour
-            parseInt(parts[4] || 0),             // minute
-            parseInt(parts[5] || 0)              // second
-          );
-
-          formattedTimestamp = jsDate.toLocaleString('it-IT', {
-            day: '2-digit',
-            month: '2-digit',
-            year: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit',
-          });
-        }
-      }
+      const rawDate = row.c[0]?.f || '';  // USIAMO 'f' = FORMATTATO
 
       return {
-        timestamp: formattedTimestamp,
+        timestamp: rawDate,  // tipo: "29/05/2025, 11:44:12"
         name: row.c[1]?.v || '',
         message: row.c[2]?.v || '',
         type: row.c[3]?.v || 'text'
