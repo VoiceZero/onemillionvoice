@@ -114,21 +114,16 @@ document.addEventListener("DOMContentLoaded", () => {
           let timestamp = "Data non valida";
 
           if (msg.timestamp) {
-            let dateObj = new Date(msg.timestamp);
+            let dateObj = new Date(msg.timestamp); // ISO format support
+
             if (isNaN(dateObj)) {
-              // fallback: parsing vecchio formato (es. 29/05/2025, 17:04:23)
-              const parts = msg.timestamp.split(/[\s,]+/);
-              const [datePart, timePart] = parts;
-              if (datePart?.includes("/")) {
-                const split = datePart.split("/");
-                if (split.length === 3) {
-                  const day = split[0];
-                  const month = split[1];
-                  const year = split[2];
-                  const iso = `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}T${timePart}`;
-                  const fallbackDate = new Date(iso);
-                  if (!isNaN(fallbackDate)) dateObj = fallbackDate;
-                }
+              // parser custom per formato "DD/MM/YYYY, HH:mm"
+              const regex = /^(\d{2})\/(\d{2})\/(\d{4}),\s*(\d{2}):(\d{2})$/;
+              const match = msg.timestamp.match(regex);
+              if (match) {
+                const [ , dd, mm, yyyy, hh, min ] = match;
+                const iso = `${yyyy}-${mm}-${dd}T${hh}:${min}:00`;
+                dateObj = new Date(iso);
               }
             }
 
