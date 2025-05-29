@@ -8,10 +8,22 @@ export default async function handler(req, res) {
     const json = JSON.parse(text.substring(47).slice(0, -2));
 
     const messages = json.table.rows.map(row => {
-      const rawDate = row.c[0]?.f || '';  // USIAMO 'f' = FORMATTATO
+      const rawDate = row.c[0]?.v; // es. Date(2025,4,29,11,44,12)
+      let formattedDate = '';
+
+      if (rawDate) {
+        const jsDate = new Date(rawDate);
+        formattedDate = jsDate.toLocaleString('it-IT', {
+          day: '2-digit',
+          month: '2-digit',
+          year: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit'
+        });
+      }
 
       return {
-        timestamp: rawDate,  // tipo: "29/05/2025, 11:44:12"
+        timestamp: formattedDate,
         name: row.c[1]?.v || '',
         message: row.c[2]?.v || '',
         type: row.c[3]?.v || 'text'
@@ -24,4 +36,3 @@ export default async function handler(req, res) {
     res.status(500).json({ error: 'Errore durante il recupero dei messaggi.' });
   }
 }
-
