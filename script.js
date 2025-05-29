@@ -1,36 +1,15 @@
 function updateTexts(lang) {
   const translations = JSON.parse(document.getElementById(`lang-${lang}`).textContent);
   window.translations = translations;
-
-  // Per index.html (form)
-  if (document.querySelector("form")) {
-    document.querySelector('header p').textContent = translations.headerSubtitle;
-    document.querySelector('.manifesto').innerHTML = `${translations.manifestoLine1}<br>${translations.manifestoLine2}<br><span>${translations.manifestoAuthor}</span>`;
-    document.querySelector('.cta-button').textContent = translations.ctaButton;
-    document.querySelector('#form h2').textContent = translations.formTitle;
-    document.querySelector('label[for="name"]').textContent = translations.nameLabel;
-    document.querySelector('input[name="name"]').placeholder = translations.namePlaceholder;
-    document.querySelector('label[for="format"]').textContent = translations.formatLabel;
-    document.querySelector('label[for="text"]').textContent = translations.textLabel;
-    document.querySelector('label[for="video"]').textContent = translations.videoLabel;
-    document.querySelector('label[for="story"]').textContent = translations.storyLabel;
-    document.querySelector('#story').placeholder = translations.storyPlaceholder;
-    document.querySelector('label[for="videoUpload"]').textContent = translations.videoUploadLabel;
-    document.getElementById('anonymous-label').textContent = translations.anonymousLabel;
-    document.getElementById('anonymous-note').textContent = translations.anonymousNote;
-    document.querySelector('button[type="submit"]').textContent = translations.submitButton;
-    document.querySelector('.dev-banner').textContent = translations.devBanner;
-  }
-
-  // Per messages.html
-  if (document.getElementById("messages-title")) {
-    document.getElementById("messages-title").textContent = translations.messagesTitle;
+  for (const key in translations) {
+    const el = document.getElementById(key);
+    if (el) el.textContent = translations[key];
   }
 }
 
-document.querySelectorAll(".flag, #language-selector button").forEach((btn) => {
+document.querySelectorAll("#language-selector button").forEach((btn) => {
   btn.addEventListener("click", () => {
-    const lang = btn.dataset?.lang || (btn.textContent.includes("Italiano") ? "it" : "en");
+    const lang = btn.textContent.includes("Italiano") ? "it" : "en";
     document.documentElement.lang = lang;
     updateTexts(lang);
   });
@@ -115,6 +94,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
 
+    // Selezione radio text/video
     document.querySelectorAll('input[name="messageType"]').forEach((radio) => {
       radio.addEventListener("change", () => {
         const format = document.querySelector('input[name="messageType"]:checked')?.value;
@@ -124,7 +104,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Caricamento messaggi per messages.html
+  // Caricamento messaggi se siamo su messages.html
   const grid = document.getElementById("messages-grid");
   if (grid) {
     fetch("/api/messages")
@@ -143,7 +123,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
       })
       .catch(err => {
-        grid.innerHTML = `<p>${window.translations?.loadError || "Errore nel caricamento dei messaggi."}</p>`;
+        grid.innerHTML = "<p>Errore nel caricamento dei messaggi.</p>";
         console.error(err);
       });
   }
