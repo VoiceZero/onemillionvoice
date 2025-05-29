@@ -9,10 +9,10 @@
 <body>
   <!-- SCELTA LINGUA -->
   <div id="language-selector">
-    <button onclick="window.translate('it')">
+    <button data-lang="it">
       <img src="https://flagcdn.com/w40/it.png" alt="IT"> Italiano
     </button>
-    <button onclick="window.translate('en')">
+    <button data-lang="en">
       <img src="https://flagcdn.com/w40/gb.png" alt="EN"> English
     </button>
   </div>
@@ -26,46 +26,9 @@
   <!-- FILE DI TRADUZIONE -->
   <script src="lang/it.json" type="application/json" id="lang-it"></script>
   <script src="lang/en.json" type="application/json" id="lang-en"></script>
+
+  <!-- LOGICA -->
   <script src="lang.js"></script>
   <script src="script.js"></script>
-
-  <!-- LOGICA DI CARICAMENTO MESSAGGI -->
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const lang = document.documentElement.lang || "it";
-      window.translate(lang);
-
-      fetch('/api/messages')
-        .then((res) => res.json())
-        .then((data) => {
-          const grid = document.getElementById("messages-grid");
-          grid.innerHTML = '';
-          data.forEach(msg => {
-            const div = document.createElement("div");
-            div.className = "card";
-
-            const timestamp = msg.timestamp ? `<small class="timestamp">${msg.timestamp}</small>` : '';
-
-            if (msg.type === "video") {
-              div.innerHTML = `
-                <video controls src="${msg.message}" class="video"></video>
-                <p><strong>${msg.name}</strong></p>
-                ${timestamp}
-              `;
-            } else {
-              div.innerHTML = `
-                <p>"${msg.message}"</p>
-                <p><strong>– ${msg.name}</strong></p>
-                ${timestamp}
-              `;
-            }
-            grid.appendChild(div);
-          });
-        })
-        .catch((err) => {
-          console.error("Errore nel caricamento messaggi:", err);
-        });
-    });
-  </script>
 </body>
 </html>
