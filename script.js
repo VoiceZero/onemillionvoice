@@ -4,11 +4,17 @@ document.addEventListener("DOMContentLoaded", () => {
   window.translate(defaultLang);
 
   // Gestione cambio lingua
-  document.querySelectorAll("#language-selector button").forEach((btn) => {
+  document.querySelectorAll("#language-selector button, .flag").forEach((btn) => {
     btn.addEventListener("click", () => {
-      const lang = btn.textContent.includes("Italiano") ? "it" : "en";
+      const lang = btn.dataset?.lang || (btn.textContent.includes("Italiano") ? "it" : "en");
       document.documentElement.lang = lang;
       window.translate(lang);
+
+      // Se siamo su messages.html, aggiorna anche il titolo
+      const title = document.getElementById("messages-title");
+      if (title && window.translations?.messagesTitle) {
+        title.textContent = window.translations.messagesTitle;
+      }
     });
   });
 
