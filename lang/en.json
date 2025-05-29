@@ -25,9 +25,7 @@
   "sending": "Sending...",
   "confirmationFull": "Thank you. Your voice has been recorded.<br>It is part of something that will last forever.",
   "confirmationAnon": "<strong>Your voice can remain anonymous, but it will never be ignored.</strong><br>It is part of something that will last forever.",
-  "devBanner": "🛠 This project is in development. Stay tuned!"
-}
-{
+  "devBanner": "🛠 This project is in development. Stay tuned!",
   "messages-title": "Messages"
 }
 
