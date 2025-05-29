@@ -1,3 +1,4 @@
+// api/messages.js
 export default async function handler(req, res) {
   const SHEET_URL = 'https://docs.google.com/spreadsheets/d/1uLdmDLDSAHhpxZ7XrwUgzi-pJsyW3f9ZMnoKMEMQrxs/gviz/tq?tqx=out:json';
 
@@ -7,13 +8,16 @@ export default async function handler(req, res) {
     const json = JSON.parse(text.substring(47).slice(0, -2));
 
     const messages = json.table.rows.map(row => {
-      const formattedTimestamp = row.c[0]?.f || ''; // ← usa la versione già formattata
+      const rawDate = row.c[0]?.f || ''; // Usa il formato formattato (es: "29/05/2025, 11:44")
+      const name = row.c[1]?.v || '';
+      const message = row.c[2]?.v || '';
+      const type = row.c[3]?.v || 'text';
 
       return {
-        timestamp: formattedTimestamp,
-        name: row.c[1]?.v || '',
-        message: row.c[2]?.v || '',
-        type: row.c[3]?.v || 'text'
+        timestamp: rawDate,
+        name,
+        message,
+        type
       };
     });
 
