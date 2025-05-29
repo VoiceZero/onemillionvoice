@@ -7,16 +7,7 @@ export default async function handler(req, res) {
     const json = JSON.parse(text.substring(47).slice(0, -2));
 
     const messages = json.table.rows.map(row => {
-      const rawTimestamp = row.c[0]?.v;
-      const formattedTimestamp = rawTimestamp
-        ? new Date(rawTimestamp).toLocaleString("it-IT", {
-            day: "2-digit",
-            month: "2-digit",
-            year: "numeric",
-            hour: "2-digit",
-            minute: "2-digit"
-          })
-        : "";
+      const formattedTimestamp = row.c[0]?.f || ''; // ← usa la versione già formattata
 
       return {
         timestamp: formattedTimestamp,
