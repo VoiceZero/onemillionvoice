@@ -8,16 +8,31 @@ export default async function handler(req, res) {
     const json = JSON.parse(text.substring(47).slice(0, -2));
 
     const messages = json.table.rows.map(row => {
-      const rawDate = row.c[0]?.f || ''; // Usa il formato formattato (es: "29/05/2025, 11:44")
-      const name = row.c[1]?.v || '';
-      const message = row.c[2]?.v || '';
-      const type = row.c[3]?.v || 'text';
+      const rawDate = row.c[0]?.v;
+      let timestamp = '';
+
+      if (rawDate && rawDate.startsWith('Date')) {
+        try {
+          // Estrai i numeri dalla stringa Date(2025,4,29,11,44,12)
+          const parts = rawDate.match(/\d+/g).map(Number);
+          const jsDate = new Date(parts[0], parts[1], parts[2], parts[3], parts[4], parts[5]);
+          timestamp = jsDate.toLocaleString('it-IT', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+          });
+        } catch (err) {
+          console.error('Errore parsing data:', rawDate, err);
+        }
+      }
 
       return {
-        timestamp: rawDate,
-        name,
-        message,
-        type
+        timestamp,
+        name: row.c[1]?.v || '',
+        message: row.c[2]?.v || '',
+        type: row.c[3]?.v || 'text'
       };
     });
 
