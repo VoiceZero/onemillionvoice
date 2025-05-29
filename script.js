@@ -1,32 +1,50 @@
-document.addEventListener("DOMContentLoaded", () => {
-  // Inizializza lingua
-  const defaultLang = document.documentElement.lang || "it";
-  window.translate(defaultLang);
+function updateTexts(lang) {
+  const translations = JSON.parse(document.getElementById(`lang-${lang}`).textContent);
+  window.translations = translations;
 
-  // Gestione cambio lingua
-  document.querySelectorAll("#language-selector button").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const lang = btn.textContent.includes("Italiano") ? "it" : "en";
-      document.documentElement.lang = lang;
-      window.translate(lang);
-    });
+  // Per index.html (form)
+  if (document.querySelector("form")) {
+    document.querySelector('header p').textContent = translations.headerSubtitle;
+    document.querySelector('.manifesto').innerHTML = `${translations.manifestoLine1}<br>${translations.manifestoLine2}<br><span>${translations.manifestoAuthor}</span>`;
+    document.querySelector('.cta-button').textContent = translations.ctaButton;
+    document.querySelector('#form h2').textContent = translations.formTitle;
+    document.querySelector('label[for="name"]').textContent = translations.nameLabel;
+    document.querySelector('input[name="name"]').placeholder = translations.namePlaceholder;
+    document.querySelector('label[for="format"]').textContent = translations.formatLabel;
+    document.querySelector('label[for="text"]').textContent = translations.textLabel;
+    document.querySelector('label[for="video"]').textContent = translations.videoLabel;
+    document.querySelector('label[for="story"]').textContent = translations.storyLabel;
+    document.querySelector('#story').placeholder = translations.storyPlaceholder;
+    document.querySelector('label[for="videoUpload"]').textContent = translations.videoUploadLabel;
+    document.getElementById('anonymous-label').textContent = translations.anonymousLabel;
+    document.getElementById('anonymous-note').textContent = translations.anonymousNote;
+    document.querySelector('button[type="submit"]').textContent = translations.submitButton;
+    document.querySelector('.dev-banner').textContent = translations.devBanner;
+  }
+
+  // Per messages.html
+  if (document.getElementById("messages-title")) {
+    document.getElementById("messages-title").textContent = translations.messagesTitle;
+  }
+}
+
+document.querySelectorAll(".flag, #language-selector button").forEach((btn) => {
+  btn.addEventListener("click", () => {
+    const lang = btn.dataset?.lang || (btn.textContent.includes("Italiano") ? "it" : "en");
+    document.documentElement.lang = lang;
+    updateTexts(lang);
   });
+});
 
-  // Logica form (solo se presente)
+document.addEventListener("DOMContentLoaded", () => {
+  const defaultLang = document.documentElement.lang || "it";
+  updateTexts(defaultLang);
+
   const form = document.querySelector("form");
   if (form) {
     const submitButton = document.querySelector('button[type="submit"]');
     const loading = document.getElementById("loading-spinner");
     const confirmation = document.getElementById("confirmation-message");
-
-    // Toggle video/text input
-    document.querySelectorAll('input[name="messageType"]').forEach((radio) => {
-      radio.addEventListener("change", () => {
-        const format = document.querySelector('input[name="messageType"]:checked')?.value;
-        document.getElementById("text-entry").style.display = format === "text" ? "block" : "none";
-        document.getElementById("video-entry").style.display = format === "video" ? "block" : "none";
-      });
-    });
 
     form.addEventListener("submit", function (e) {
       e.preventDefault();
@@ -41,7 +59,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (!nameInput && !anonymousChecked) {
         alert(window.translations?.errorMissingName || "Per favore inserisci il tuo nome o spunta 'Anonimo'.");
-        return resetButton();
+        resetButton();
+        return;
       }
 
       const name = anonymousChecked ? "Anonymous" : nameInput;
@@ -50,12 +69,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (format === "text" && !story) {
         alert(window.translations?.errorMissingStory || "Per favore scrivi il tuo messaggio.");
-        return resetButton();
+        resetButton();
+        return;
       }
 
       if (format === "video") {
         alert(window.translations?.errorVideoNotSupported || "Il formato video non è ancora supportato.");
-        return resetButton();
+        resetButton();
+        return;
       }
 
       const payload = {
@@ -81,7 +102,7 @@ document.addEventListener("DOMContentLoaded", () => {
         })
         .catch((error) => {
           alert(window.translations?.errorGeneric || "Si è verificato un errore. Riprova.");
-          console.error("Errore:", error);
+          console.error("Error:", error);
         })
         .finally(() => {
           resetButton();
@@ -93,9 +114,17 @@ document.addEventListener("DOMContentLoaded", () => {
         submitButton.textContent = window.translations?.submitButton || "Invia";
       }
     });
+
+    document.querySelectorAll('input[name="messageType"]').forEach((radio) => {
+      radio.addEventListener("change", () => {
+        const format = document.querySelector('input[name="messageType"]:checked')?.value;
+        document.getElementById("text-entry").style.display = format === "text" ? "block" : "none";
+        document.getElementById("video-entry").style.display = format === "video" ? "block" : "none";
+      });
+    });
   }
 
-  // Caricamento messaggi (solo se presenti)
+  // Caricamento messaggi per messages.html
   const grid = document.getElementById("messages-grid");
   if (grid) {
     fetch("/api/messages")
@@ -114,8 +143,9 @@ document.addEventListener("DOMContentLoaded", () => {
         });
       })
       .catch(err => {
-        grid.innerHTML = "<p>Errore nel caricamento dei messaggi.</p>";
+        grid.innerHTML = `<p>${window.translations?.loadError || "Errore nel caricamento dei messaggi."}</p>`;
         console.error(err);
       });
   }
 });
+
