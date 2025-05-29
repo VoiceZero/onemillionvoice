@@ -8,8 +8,11 @@ export default async function handler(req, res) {
     const json = JSON.parse(text.substring(47).slice(0, -2));
 
     const messages = json.table.rows.map(row => {
+      // Recupera il valore timestamp (formattato come stringa nel Google Sheet)
+      const timestamp = row.c[0]?.v || '';
+
       return {
-        timestamp: row.c[0]?.v || '',
+        timestamp,
         name: row.c[1]?.v || '',
         message: row.c[2]?.v || '',
         type: row.c[3]?.v || 'text'
