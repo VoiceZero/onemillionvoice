@@ -65,7 +65,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const payload = {
         name: name,
         message: story,
-        messageType: format,
+        "Message Type": format, // ✅ coerente con Google Sheet
         timestamp: timestamp,
         timezone: timezone
       };
