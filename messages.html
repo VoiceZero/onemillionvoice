@@ -9,26 +9,47 @@
 <body>
   <!-- SCELTA LINGUA -->
   <div id="language-selector">
-    <button data-lang="it" class="flag">
+    <button onclick="window.translate('it')">
       <img src="https://flagcdn.com/w40/it.png" alt="IT"> Italiano
     </button>
-    <button data-lang="en" class="flag">
+    <button onclick="window.translate('en')">
       <img src="https://flagcdn.com/w40/gb.png" alt="EN"> English
     </button>
   </div>
 
-  <!-- TITOLO TRADOTTO -->
-  <h1 id="messages-title">Messaggi</h1>
-
-  <!-- GRIGLIA MESSAGGI -->
+  <h1 id="messages-title"></h1>
   <div id="messages-grid" class="grid"></div>
 
-  <!-- TRADUZIONI -->
   <script src="lang/it.json" type="application/json" id="lang-it"></script>
   <script src="lang/en.json" type="application/json" id="lang-en"></script>
-
-  <!-- SCRIPT -->
   <script src="lang.js"></script>
   <script src="script.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const lang = document.documentElement.lang || "it";
+      window.translate(lang);
+
+      fetch('/api/messages')
+        .then((res) => res.json())
+        .then((data) => {
+          const grid = document.getElementById("messages-grid");
+          grid.innerHTML = '';
+          data.forEach(msg => {
+            const div = document.createElement("div");
+            div.className = "card";
+            if (msg.type === "video") {
+              div.innerHTML = `<video controls src="${msg.message}" class="video"></video><p>${msg.name}</p>`;
+            } else {
+              div.innerHTML = `<p>"${msg.message}"</p><p><strong>– ${msg.name}</strong></p>`;
+            }
+            grid.appendChild(div);
+          });
+        })
+        .catch((err) => {
+          console.error("Errore nel caricamento messaggi:", err);
+        });
+    });
+  </script>
 </body>
 </html>
