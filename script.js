@@ -10,7 +10,6 @@ document.addEventListener("DOMContentLoaded", () => {
       document.documentElement.lang = lang;
       window.translate(lang);
 
-      // Se siamo su messages.html, aggiorna anche il titolo
       const title = document.getElementById("messages-title");
       if (title && window.translations?.messagesTitle) {
         title.textContent = window.translations.messagesTitle;
@@ -147,7 +146,6 @@ document.addEventListener("DOMContentLoaded", () => {
       });
   }
 
-  // Traduci titolo messaggi anche al caricamento diretto della pagina
   const title = document.getElementById("messages-title");
   if (title && window.translations?.messagesTitle) {
     title.textContent = window.translations.messagesTitle;
