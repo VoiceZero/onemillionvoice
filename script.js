@@ -111,10 +111,27 @@ document.addEventListener("DOMContentLoaded", () => {
           const div = document.createElement("div");
           div.className = "card";
 
-          // TIMESTAMP ROBUSTO + TIMEZONE
-          let timestamp = "";
+          let timestamp = "Data non valida";
+
           if (msg.timestamp) {
-            const dateObj = new Date(msg.timestamp);
+            let dateObj = new Date(msg.timestamp);
+            if (isNaN(dateObj)) {
+              // fallback: parsing vecchio formato (es. 29/05/2025, 17:04:23)
+              const parts = msg.timestamp.split(/[\s,]+/);
+              const [datePart, timePart] = parts;
+              if (datePart?.includes("/")) {
+                const split = datePart.split("/");
+                if (split.length === 3) {
+                  const day = split[0];
+                  const month = split[1];
+                  const year = split[2];
+                  const iso = `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}T${timePart}`;
+                  const fallbackDate = new Date(iso);
+                  if (!isNaN(fallbackDate)) dateObj = fallbackDate;
+                }
+              }
+            }
+
             if (!isNaN(dateObj)) {
               timestamp =
                 dateObj.toLocaleDateString("it-IT", {
@@ -131,8 +148,6 @@ document.addEventListener("DOMContentLoaded", () => {
               if (msg.timezone) {
                 timestamp += ` (${msg.timezone})`;
               }
-            } else {
-              timestamp = "Data non valida";
             }
           }
 
