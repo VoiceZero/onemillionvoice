@@ -116,6 +116,8 @@ document.addEventListener("DOMContentLoaded", () => {
           let timestamp = "Data non valida";
 
           if (msg.timestamp) {
+            console.log("🔍 Timestamp ricevuto:", msg.timestamp); // 👈 DEBUG
+
             let dateObj;
 
             // Caso 1: formato ISO
