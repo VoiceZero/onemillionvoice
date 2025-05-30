@@ -15,7 +15,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // ================= FORM (index.html) =================
   const form = document.querySelector("form");
   if (form) {
     const submitButton = document.querySelector('button[type="submit"]');
@@ -104,7 +103,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // ================= MESSAGGI (messages.html) =================
   const grid = document.getElementById("messages-grid");
   if (grid) {
     fetch("/api/messages")
@@ -119,8 +117,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
           let timestamp = "Data non valida";
 
-          try {
-            const dateObj = new Date(msg.timestamp);
+          if (msg.timestamp) {
+            let dateObj = new Date(msg.timestamp);
+
+            if (isNaN(dateObj)) {
+              const regex = /^(\d{2})\/(\d{2})\/(\d{4}),\s*(\d{2}):(\d{2})$/;
+              const match = msg.timestamp.match(regex);
+              if (match) {
+                const [ , dd, mm, yyyy, hh, min ] = match;
+                const iso = `${yyyy}-${mm}-${dd}T${hh}:${min}:00`;
+                dateObj = new Date(iso);
+              }
+            }
+
             if (!isNaN(dateObj)) {
               timestamp =
                 dateObj.toLocaleDateString("it-IT", {
@@ -138,8 +147,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 timestamp += ` (${msg.timezone})`;
               }
             }
-          } catch (err) {
-            console.warn("❌ Errore parsing timestamp:", msg.timestamp);
           }
 
           if (msg.type === "video") {
