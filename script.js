@@ -60,15 +60,16 @@ document.addEventListener("DOMContentLoaded", () => {
         return resetButton();
       }
 
-      const timestamp = new Date().toISOString();
+      const now = new Date();
+      const timestamp = now.toISOString();
       const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
       const payload = {
-        name: name,
+        name,
         message: story,
         "Message Type": format,
-        timestamp: timestamp,
-        timezone: timezone
+        timestamp,
+        timezone
       };
 
       console.log("📤 Payload inviato:", payload);
