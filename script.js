@@ -116,40 +116,42 @@ document.addEventListener("DOMContentLoaded", () => {
           let timestamp = "Data non valida";
 
           if (msg.timestamp) {
-            console.log("🔍 Timestamp ricevuto:", msg.timestamp); // 👈 DEBUG
-
             let dateObj;
 
-            // Caso 1: formato ISO
-            if (!isNaN(Date.parse(msg.timestamp))) {
-              dateObj = new Date(msg.timestamp);
-            } else {
-              // Caso 2: formato "DD/MM/YYYY, HH:mm"
-              const regex = /^(\d{2})\/(\d{2})\/(\d{4}),\s*(\d{2}):(\d{2})$/;
-              const match = msg.timestamp.match(regex);
-              if (match) {
-                const [, dd, mm, yyyy, hh, min] = match;
-                const iso = `${yyyy}-${mm}-${dd}T${hh}:${min}:00`;
-                dateObj = new Date(iso);
+            try {
+              // ISO standard
+              if (!isNaN(Date.parse(msg.timestamp))) {
+                dateObj = new Date(msg.timestamp);
+              } else {
+                // vecchio formato "DD/MM/YYYY, HH:mm"
+                const regex = /^(\d{2})\/(\d{2})\/(\d{4}),\s*(\d{2}):(\d{2})$/;
+                const match = msg.timestamp.match(regex);
+                if (match) {
+                  const [, dd, mm, yyyy, hh, min] = match;
+                  const iso = `${yyyy}-${mm}-${dd}T${hh}:${min}:00`;
+                  dateObj = new Date(iso);
+                }
               }
-            }
 
-            if (dateObj && !isNaN(dateObj.getTime())) {
-              timestamp =
-                dateObj.toLocaleDateString("it-IT", {
-                  day: "2-digit",
-                  month: "2-digit",
-                  year: "numeric"
-                }) +
-                " " +
-                dateObj.toLocaleTimeString("it-IT", {
-                  hour: "2-digit",
-                  minute: "2-digit"
-                });
+              if (dateObj && !isNaN(dateObj.getTime())) {
+                timestamp =
+                  dateObj.toLocaleDateString("it-IT", {
+                    day: "2-digit",
+                    month: "2-digit",
+                    year: "numeric"
+                  }) +
+                  " " +
+                  dateObj.toLocaleTimeString("it-IT", {
+                    hour: "2-digit",
+                    minute: "2-digit"
+                  });
 
-              if (msg.timezone) {
-                timestamp += ` (${msg.timezone})`;
+                if (msg.timezone) {
+                  timestamp += ` (${msg.timezone})`;
+                }
               }
+            } catch (err) {
+              console.error("Errore parsing timestamp:", msg.timestamp, err);
             }
           }
 
