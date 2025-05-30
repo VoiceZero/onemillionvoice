@@ -1,4 +1,3 @@
-// api/messages.js
 export default async function handler(req, res) {
   const SHEET_URL = 'https://docs.google.com/spreadsheets/d/1uLdmDLDSAHhpxZ7XrwUgzi-pJsyW3f9ZMnoKMEMQrxs/gviz/tq?tqx=out:json';
 
@@ -8,14 +7,14 @@ export default async function handler(req, res) {
     const json = JSON.parse(text.substring(47).slice(0, -2));
 
     const messages = json.table.rows.map(row => {
-      const timestamp = row.c[0]?.v || "";  // ISO formato già pronto
-      const name = row.c[1]?.v || "Anonymous";
-      const message = row.c[2]?.v || "";
-      const type = row.c[3]?.v || "text";
-      const timezone = row.c[4]?.v || "";
+      const rawTimestamp = row.c[0]?.v || '';
+      const name = row.c[1]?.v || '';
+      const message = row.c[2]?.v || '';
+      const type = row.c[3]?.v || 'text';
+      const timezone = row.c[4]?.v || '';
 
       return {
-        timestamp,
+        timestamp: rawTimestamp,
         name,
         message,
         type,
