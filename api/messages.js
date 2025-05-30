@@ -12,7 +12,6 @@ export default async function handler(req, res) {
 
       try {
         if (rawTimestamp.startsWith('Date(')) {
-          // Vecchio formato
           const parts = rawTimestamp
             .replace('Date(', '')
             .replace(')', '')
@@ -21,7 +20,6 @@ export default async function handler(req, res) {
           const dateObj = new Date(parts[0], parts[1], parts[2], parts[3], parts[4], parts[5]);
           formattedDate = dateObj.toISOString();
         } else if (!isNaN(Date.parse(rawTimestamp))) {
-          // Formato ISO moderno
           const dateObj = new Date(rawTimestamp);
           formattedDate = dateObj.toISOString();
         }
