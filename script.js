@@ -15,6 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
+  // ================= FORM (index.html) =================
   const form = document.querySelector("form");
   if (form) {
     const submitButton = document.querySelector('button[type="submit"]');
@@ -70,7 +71,7 @@ document.addEventListener("DOMContentLoaded", () => {
         timezone: timezone
       };
 
-      console.log("Dati inviati al server:", payload);
+      console.log("📤 Payload inviato:", payload);
 
       fetch("/api/submit", {
         method: "POST",
@@ -103,6 +104,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // ================= MESSAGGI (messages.html) =================
   const grid = document.getElementById("messages-grid");
   if (grid) {
     fetch("/api/messages")
@@ -110,26 +112,32 @@ document.addEventListener("DOMContentLoaded", () => {
       .then((data) => {
         grid.innerHTML = '';
         data.forEach(msg => {
+          const div = document.createElement("div");
+          div.className = "card";
+
           console.log("📥 Messaggio ricevuto:", msg);
 
           let timestamp = "Data non valida";
 
           if (msg.timestamp) {
-            let dateObj;
+            let dateObj = null;
 
-            if (!isNaN(Date.parse(msg.timestamp))) {
-              dateObj = new Date(msg.timestamp);
-            } else {
-              const regex = /^(\d{2})\/(\d{2})\/(\d{4}),\s*(\d{2}):(\d{2})$/;
-              const match = msg.timestamp.match(regex);
-              if (match) {
-                const [, dd, mm, yyyy, hh, min] = match;
-                const iso = `${yyyy}-${mm}-${dd}T${hh}:${min}:00`;
-                dateObj = new Date(iso);
+            try {
+              if (msg.timestamp.startsWith("Date(")) {
+                const parts = msg.timestamp
+                  .replace("Date(", "")
+                  .replace(")", "")
+                  .split(",")
+                  .map(n => parseInt(n));
+                dateObj = new Date(parts[0], parts[1], parts[2], parts[3], parts[4], parts[5]);
+              } else if (!isNaN(Date.parse(msg.timestamp))) {
+                dateObj = new Date(msg.timestamp);
               }
+            } catch (err) {
+              console.warn("❌ Errore parsing timestamp:", msg.timestamp);
             }
 
-            if (dateObj && !isNaN(dateObj.getTime())) {
+            if (dateObj && !isNaN(dateObj)) {
               timestamp =
                 dateObj.toLocaleDateString("it-IT", {
                   day: "2-digit",
@@ -145,13 +153,8 @@ document.addEventListener("DOMContentLoaded", () => {
               if (msg.timezone) {
                 timestamp += ` (${msg.timezone})`;
               }
-            } else {
-              console.warn("⚠️ Errore parsing timestamp:", msg.timestamp);
             }
           }
-
-          const div = document.createElement("div");
-          div.className = "card";
 
           if (msg.type === "video") {
             div.innerHTML = `
