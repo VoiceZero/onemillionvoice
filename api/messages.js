@@ -8,7 +8,7 @@ export default async function handler(req, res) {
     const json = JSON.parse(text.substring(47).slice(0, -2));
 
     const messages = json.table.rows.map(row => {
-      const rawTimestamp = row.c[0]?.v || '';
+      const rawTimestamp = row.c[0]?.v;
       const name = row.c[1]?.v || '';
       const message = row.c[2]?.v || '';
       const type = row.c[3]?.v || 'text';
@@ -17,13 +17,18 @@ export default async function handler(req, res) {
       let timestamp = '';
       let dateObj = null;
 
-      // Prova ISO 8601
-      if (typeof rawTimestamp === 'string' && !isNaN(Date.parse(rawTimestamp))) {
+      // Caso 1: oggetto Date (interno di gviz)
+      if (typeof rawTimestamp === 'object' && rawTimestamp instanceof Date) {
+        dateObj = rawTimestamp;
+      }
+
+      // Caso 2: stringa ISO valida
+      else if (typeof rawTimestamp === 'string' && !isNaN(Date.parse(rawTimestamp))) {
         dateObj = new Date(rawTimestamp);
       }
 
-      // Prova formato Date(2025,4,29,16,5,11)
-      if (typeof rawTimestamp === 'string' && rawTimestamp.startsWith("Date(")) {
+      // Caso 3: stringa "Date(...)"
+      else if (typeof rawTimestamp === 'string' && rawTimestamp.startsWith("Date(")) {
         try {
           const parts = rawTimestamp
             .replace("Date(", "")
@@ -32,7 +37,7 @@ export default async function handler(req, res) {
             .map(n => parseInt(n));
           dateObj = new Date(parts[0], parts[1], parts[2], parts[3], parts[4], parts[5]);
         } catch (err) {
-          console.warn("Errore parsing Date():", rawTimestamp);
+          console.warn("Errore parsing Date(...):", rawTimestamp);
         }
       }
 
