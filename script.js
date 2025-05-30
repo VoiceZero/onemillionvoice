@@ -70,7 +70,6 @@ document.addEventListener("DOMContentLoaded", () => {
         timezone: timezone
       };
 
-      // 👇 LOG DI DEBUG VISIBILE NEL BROWSER
       console.log("Dati inviati al server:", payload);
 
       fetch("/api/submit", {
@@ -117,19 +116,23 @@ document.addEventListener("DOMContentLoaded", () => {
           let timestamp = "Data non valida";
 
           if (msg.timestamp) {
-            let dateObj = new Date(msg.timestamp);
+            let dateObj;
 
-            if (isNaN(dateObj)) {
+            // Caso 1: formato ISO
+            if (!isNaN(Date.parse(msg.timestamp))) {
+              dateObj = new Date(msg.timestamp);
+            } else {
+              // Caso 2: formato "DD/MM/YYYY, HH:mm"
               const regex = /^(\d{2})\/(\d{2})\/(\d{4}),\s*(\d{2}):(\d{2})$/;
               const match = msg.timestamp.match(regex);
               if (match) {
-                const [ , dd, mm, yyyy, hh, min ] = match;
+                const [, dd, mm, yyyy, hh, min] = match;
                 const iso = `${yyyy}-${mm}-${dd}T${hh}:${min}:00`;
                 dateObj = new Date(iso);
               }
             }
 
-            if (!isNaN(dateObj)) {
+            if (dateObj && !isNaN(dateObj.getTime())) {
               timestamp =
                 dateObj.toLocaleDateString("it-IT", {
                   day: "2-digit",
