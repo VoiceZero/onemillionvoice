@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // ========== FORM INVIO (index.html) ==========
+  // ================= FORM (index.html) =================
   const form = document.querySelector("form");
   if (form) {
     const submitButton = document.querySelector('button[type="submit"]');
@@ -60,16 +60,15 @@ document.addEventListener("DOMContentLoaded", () => {
         return resetButton();
       }
 
-      const now = new Date();
-      const timestamp = now.toISOString();
+      const timestamp = new Date().toISOString();
       const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
       const payload = {
-        name,
+        name: name,
         message: story,
         "Message Type": format,
-        timestamp,
-        timezone
+        timestamp: timestamp,
+        timezone: timezone
       };
 
       console.log("📤 Payload inviato:", payload);
@@ -105,7 +104,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // ========== VISUALIZZAZIONE MESSAGGI (messages.html) ==========
+  // ================= MESSAGGI (messages.html) =================
   const grid = document.getElementById("messages-grid");
   if (grid) {
     fetch("/api/messages")
@@ -118,9 +117,29 @@ document.addEventListener("DOMContentLoaded", () => {
 
           console.log("📥 Messaggio ricevuto:", msg);
 
-          let timestamp = msg.timestamp || "Data non valida";
-          if (msg.timezone) {
-            timestamp += ` (${msg.timezone})`;
+          let timestamp = "Data non valida";
+
+          try {
+            const dateObj = new Date(msg.timestamp);
+            if (!isNaN(dateObj)) {
+              timestamp =
+                dateObj.toLocaleDateString("it-IT", {
+                  day: "2-digit",
+                  month: "2-digit",
+                  year: "numeric"
+                }) +
+                " " +
+                dateObj.toLocaleTimeString("it-IT", {
+                  hour: "2-digit",
+                  minute: "2-digit"
+                });
+
+              if (msg.timezone) {
+                timestamp += ` (${msg.timezone})`;
+              }
+            }
+          } catch (err) {
+            console.warn("❌ Errore parsing timestamp:", msg.timestamp);
           }
 
           if (msg.type === "video") {
