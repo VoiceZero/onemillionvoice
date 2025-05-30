@@ -1,4 +1,3 @@
-// api/messages.js
 export default async function handler(req, res) {
   const SHEET_URL = 'https://docs.google.com/spreadsheets/d/1uLdmDLDSAHhpxZ7XrwUgzi-pJsyW3f9ZMnoKMEMQrxs/gviz/tq?tqx=out:json';
 
@@ -13,7 +12,7 @@ export default async function handler(req, res) {
 
       try {
         if (rawTimestamp.startsWith('Date(')) {
-          // Vecchio formato Google
+          // Vecchio formato
           const parts = rawTimestamp
             .replace('Date(', '')
             .replace(')', '')
@@ -22,7 +21,7 @@ export default async function handler(req, res) {
           const dateObj = new Date(parts[0], parts[1], parts[2], parts[3], parts[4], parts[5]);
           formattedDate = dateObj.toISOString();
         } else if (!isNaN(Date.parse(rawTimestamp))) {
-          // Nuovo formato ISO
+          // Formato ISO moderno
           const dateObj = new Date(rawTimestamp);
           formattedDate = dateObj.toISOString();
         }
