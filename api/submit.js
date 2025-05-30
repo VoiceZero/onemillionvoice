@@ -3,7 +3,8 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: "Only POST requests allowed" });
   }
 
-  // ✅ Log per controllare quale URL viene effettivamente usata da Vercel
+  // 🔁 FORZA TEST
+  console.log("💥 Questo è il submit.js aggiornato!"); 
   console.log("🔍 Using Google Apps Script URL:", process.env.GOOGLE_APPS_SCRIPT_URL);
 
   try {
