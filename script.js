@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // ========== FORM INVIO ==========
+  // ========== FORM INVIO (index.html) ==========
   const form = document.querySelector("form");
   if (form) {
     const submitButton = document.querySelector('button[type="submit"]');
@@ -105,7 +105,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // ========== MESSAGGI ==========
+  // ========== VISUALIZZAZIONE MESSAGGI (messages.html) ==========
   const grid = document.getElementById("messages-grid");
   if (grid) {
     fetch("/api/messages")
@@ -118,39 +118,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
           console.log("📥 Messaggio ricevuto:", msg);
 
-          let timestamp = "Data non valida";
-
-          if (msg.timestamp) {
-            let dateObj = null;
-
-            // Caso nuovo formato: ISO
-            if (!isNaN(Date.parse(msg.timestamp))) {
-              dateObj = new Date(msg.timestamp);
-            }
-
-            if (dateObj && !isNaN(dateObj)) {
-              timestamp =
-                dateObj.toLocaleDateString("it-IT", {
-                  day: "2-digit",
-                  month: "2-digit",
-                  year: "numeric"
-                }) +
-                " " +
-                dateObj.toLocaleTimeString("it-IT", {
-                  hour: "2-digit",
-                  minute: "2-digit"
-                });
-
-              if (msg.timezone) {
-                timestamp += ` (${msg.timezone})`;
-              }
-            } else {
-              // Se il timestamp è già formattato (vecchio stile)
-              timestamp = msg.timestamp;
-              if (msg.timezone) {
-                timestamp += ` (${msg.timezone})`;
-              }
-            }
+          let timestamp = msg.timestamp || "Data non valida";
+          if (msg.timezone) {
+            timestamp += ` (${msg.timezone})`;
           }
 
           if (msg.type === "video") {
@@ -183,4 +153,3 @@ document.addEventListener("DOMContentLoaded", () => {
     title.textContent = window.translations.messagesTitle;
   }
 });
-
