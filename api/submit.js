@@ -3,9 +3,11 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: "Only POST requests allowed" });
   }
 
+  // ✅ Log per controllare quale URL viene effettivamente usata da Vercel
+  console.log("🔍 Using Google Apps Script URL:", process.env.GOOGLE_APPS_SCRIPT_URL);
+
   try {
-    const response = await fetch(process.env.GOOGLE_APPS_SCRIPT_URL
-, {
+    const response = await fetch(process.env.GOOGLE_APPS_SCRIPT_URL, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
