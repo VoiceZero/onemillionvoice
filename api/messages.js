@@ -11,32 +11,31 @@ export default async function handler(req, res) {
       const rawTimestamp = row.c[0]?.v || '';
       let formattedDate = '';
 
-      if (rawTimestamp.startsWith('Date(')) {
-        try {
+      try {
+        if (rawTimestamp.startsWith('Date(')) {
+          // Vecchio formato Google
           const parts = rawTimestamp
             .replace('Date(', '')
             .replace(')', '')
             .split(',')
             .map(n => parseInt(n));
-
           const dateObj = new Date(parts[0], parts[1], parts[2], parts[3], parts[4], parts[5]);
-          formattedDate = dateObj.toLocaleString('it-IT', {
-            day: '2-digit',
-            month: '2-digit',
-            year: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit'
-          });
-        } catch (err) {
-          console.error('Errore nel parsing della data:', rawTimestamp);
+          formattedDate = dateObj.toISOString();
+        } else if (!isNaN(Date.parse(rawTimestamp))) {
+          // Nuovo formato ISO
+          const dateObj = new Date(rawTimestamp);
+          formattedDate = dateObj.toISOString();
         }
+      } catch (err) {
+        console.error('❌ Errore nel parsing della data:', rawTimestamp);
       }
 
       return {
-        timestamp: formattedDate,
+        timestamp: formattedDate || rawTimestamp,
         name: row.c[1]?.v || '',
         message: row.c[2]?.v || '',
-        type: row.c[3]?.v || 'text'
+        type: row.c[3]?.v || 'text',
+        timezone: row.c[4]?.v || ''
       };
     });
 
